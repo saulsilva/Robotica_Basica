@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curso de Robótica y Electrónica para Secundaria · Inna'at Robótica</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a0f1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <style>
+    :root {
+      --accent:   #22c55e;
+      --accent2:  #16a34a;
+      --bg:       #0a0f1a;
+      --bg2:      #0d1526;
+      --card:     rgba(255,255,255,0.03);
+      --border:   rgba(255,255,255,0.08);
+      --text:     #ffffff;
+      --muted:    rgba(255,255,255,0.55);
+    }
+    * { box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; overflow-x: hidden; margin: 0; }
+    
+    .grid-bg {
+      background-image: radial-gradient(var(--accent) 0.5px, transparent 0.5px);
+      background-size: 26px 26px; opacity: 0.07;
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: all 0.25s ease;
+    }
+    .card:hover {
+      border-color: rgba(34, 197, 94, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px;
+      border-radius: 999px; font-size: 10px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; font-family: 'Space Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+
+  <!-- Header -->
+  <header class="relative z-10 border-b border-white/10 px-6 py-5">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <img src="static/images/logo_transparent.png" class="h-10 filter invert opacity-90" alt="Inna'at" onerror="this.src='/static/images/logo_transparent.png'">
+        <div class="hidden sm:block">
+          <div class="text-xs font-mono text-green-400 font-bold uppercase tracking-wider">Inna'at · Robótica Educativa</div>
+          <div class="text-[10px] text-slate-400">Del Conocimiento a la Acción</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button id="pwa-install-btn" class="hidden items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold border border-green-500/30 bg-green-500/10 text-green-400 hover:bg-green-500/20 transition">
+          <i data-lucide="download" style="width:13px;height:13px"></i> Instalar App
+        </button>
+        
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative z-10 px-6 pt-16 pb-12 text-center max-w-4xl mx-auto">
+    <div class="flex justify-center gap-2 mb-6 flex-wrap">
+      <span class="badge bg-green-500/15 text-green-400 border border-green-500/30">⚡ ESP32 & Sensores</span>
+      <span class="badge bg-blue-500/15 text-blue-400 border border-blue-500/30">💻 Wokwi + Tinkercad</span>
+      <span class="badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/30">🎒 Nivel Secundaria</span>
+      <span class="badge bg-purple-500/15 text-purple-400 border border-purple-500/30">📱 Modo App / PWA</span>
+    </div>
+
+    <h1 class="text-4xl md:text-6xl font-black italic uppercase tracking-tight leading-none mb-6">
+      Curso de Robótica y Electrónica para Secundaria
+    </h1>
+
+    <p class="text-slate-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10">
+      Manuales prácticos interactivos y modulares de robótica usando ESP32 y simuladores.
+    </p>
+
+    <!-- Main Navigation Actions -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+      <a href="manual.html" class="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-sm bg-gradient-to-r from-green-500 to-emerald-600 text-black hover:from-green-400 hover:to-emerald-500 transition shadow-lg shadow-green-500/20 flex items-center justify-center gap-2">
+        <i data-lucide="book-open" style="width:18px;height:18px"></i> Manual del Estudiante
+      </a>
+      <a href="manual_docente.html" class="w-full sm:w-auto px-6 py-4 rounded-2xl font-bold text-sm border border-purple-500/30 bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 transition flex items-center justify-center gap-2">
+        <i data-lucide="graduation-cap" style="width:18px;height:18px"></i> Manual del Docente
+      </a>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-3 gap-4 max-w-lg mx-auto mt-14 pt-8 border-t border-white/10">
+      <div>
+        <div class="text-2xl md:text-3xl font-black font-mono text-green-400">2</div>
+        <div class="text-[10px] uppercase tracking-wider text-slate-500 font-bold mt-1">Prácticas</div>
+      </div>
+      <div>
+        <div class="text-2xl md:text-3xl font-black font-mono text-blue-400">0</div>
+        <div class="text-[10px] uppercase tracking-wider text-slate-500 font-bold mt-1">Módulos Teóricos</div>
+      </div>
+      <div>
+        <div class="text-2xl md:text-3xl font-black font-mono text-yellow-400">100%</div>
+        <div class="text-[10px] uppercase tracking-wider text-slate-500 font-bold mt-1">Interactivo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Temario Grid -->
+  <section class="relative z-10 px-6 py-12 max-w-6xl mx-auto">
+    <div class="flex items-center justify-between mb-8 pb-4 border-b border-white/10">
+      <div>
+        <h2 class="text-xl md:text-2xl font-black uppercase italic tracking-wide">Temario y Contenido del Curso</h2>
+        <p class="text-xs text-slate-400 mt-1">Selecciona cualquier práctica para abrirla directamente en el manual interactivo</p>
+      </div>
+      <a href="manual.html" class="text-xs font-bold text-green-400 hover:underline flex items-center gap-1">
+        Ver todo el manual <i data-lucide="arrow-right" style="width:14px;height:14px"></i>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+        
+        <div class="card p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="badge bg-green-500/15 text-green-400 border border-green-500/30">P-01</span>
+              <span class="badge bg-blue-500/15 text-blue-400 border border-blue-500/30">Electrónica</span>
+              <span class="badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/30">Nivel 🟢 Básico</span>
+            </div>
+
+            <h3 class="text-lg font-bold uppercase italic leading-snug mb-2 text-white">
+              ⚡ El multímetro y la Ley de Ohm
+            </h3>
+
+            
+            <p class="text-xs text-slate-400 italic line-clamp-2 mb-4">
+              "¿Cómo podemos detectar los fallos invisibles que impiden que nuestro robot gane la carrera o, peor aún, evitar que su cerebro electrónico se queme en plena competencia?"
+            </p>
+            
+
+            
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              
+              <span class="text-[10px] px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300 font-mono">Multímetro digital</span>
+              
+              <span class="text-[10px] px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300 font-mono">Resistencias 220Ω</span>
+              
+              <span class="text-[10px] px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300 font-mono">1kΩ</span>
+              
+              
+              <span class="text-[10px] px-2 py-0.5 rounded-md bg-white/5 text-slate-500 font-mono">+7 más</span>
+              
+            </div>
+            
+          </div>
+
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between mt-2">
+            <span class="text-[10px] font-mono text-slate-500">7 slides</span>
+            <a href="manual.html#section-P01" class="px-3.5 py-1.5 rounded-xl bg-green-500/10 hover:bg-green-500/20 text-green-400 text-xs font-bold border border-green-500/30 transition flex items-center gap-1">
+              Abrir Práctica <i data-lucide="chevron-right" style="width:13px;height:13px"></i>
+            </a>
+          </div>
+        </div>
+
+        
+      
+        
+        <div class="card p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="badge bg-green-500/15 text-green-400 border border-green-500/30">P-02</span>
+              <span class="badge bg-blue-500/15 text-blue-400 border border-blue-500/30">Electrónica</span>
+              <span class="badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/30">Nivel 🟢 Básico</span>
+            </div>
+
+            <h3 class="text-lg font-bold uppercase italic leading-snug mb-2 text-white">
+              El capacitor, el componente mas incomprendido
+            </h3>
+
+            
+            <p class="text-xs text-slate-400 italic line-clamp-2 mb-4">
+              "¿De donde saca el impuslo el robot para mantener el movimiento con la misma fuerza?"
+            </p>
+            
+
+            
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              
+              <span class="text-[10px] px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300 font-mono">Multimetro</span>
+              
+              <span class="text-[10px] px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300 font-mono">Leds diversos colores</span>
+              
+              <span class="text-[10px] px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300 font-mono">2 Resistencias de 10Kohms</span>
+              
+              
+              <span class="text-[10px] px-2 py-0.5 rounded-md bg-white/5 text-slate-500 font-mono">+4 más</span>
+              
+            </div>
+            
+          </div>
+
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between mt-2">
+            <span class="text-[10px] font-mono text-slate-500">1 slides</span>
+            <a href="manual.html#section-EB_P02" class="px-3.5 py-1.5 rounded-xl bg-green-500/10 hover:bg-green-500/20 text-green-400 text-xs font-bold border border-green-500/30 transition flex items-center gap-1">
+              Abrir Práctica <i data-lucide="chevron-right" style="width:13px;height:13px"></i>
+            </a>
+          </div>
+        </div>
+
+        
+      
+    </div>
+  </section>
+
+  <!-- PWA Offline Banner -->
+  <section class="relative z-10 px-6 py-12 max-w-4xl mx-auto">
+    <div class="card p-8 bg-gradient-to-br from-green-500/10 via-slate-900/60 to-blue-500/10 border-green-500/20 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+      <div>
+        <div class="flex items-center justify-center md:justify-start gap-2 text-green-400 text-xs font-bold font-mono uppercase mb-2">
+          <i data-lucide="smartphone" style="width:16px;height:16px"></i> Aplicación Web Progresiva
+        </div>
+        <h3 class="text-xl font-bold text-white mb-1">Úsalo en el aula sin depender de internet</h3>
+        <p class="text-xs text-slate-400 max-w-md">Instálalo en tu celular, tablet o laptop escolar desde tu navegador. Todos los pasos y fórmulas quedan guardados en el dispositivo.</p>
+      </div>
+      <a href="manual.html" class="px-6 py-3 rounded-xl bg-white text-black font-bold text-xs hover:bg-slate-200 transition shrink-0 flex items-center gap-2">
+        <i data-lucide="play" style="width:14px;height:14px"></i> Comenzar Curso
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative z-10 border-t border-white/10 px-6 py-8 mt-12 text-center">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div class="flex items-center gap-3">
+        <img src="static/images/logo_transparent.png" class="h-6 filter invert opacity-60" alt="Inna'at" onerror="this.src='/static/images/logo_transparent.png'">
+        <span>Inna'at · Del conocimiento a la acción</span>
+      </div>
+      <div>
+        RoboManuals Builder · Publicado en GitHub Pages
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // PWA Install Prompt Handler
+    let deferredPrompt;
+    const installBtn = document.getElementById('pwa-install-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (installBtn) {
+        installBtn.classList.remove('hidden');
+        installBtn.classList.add('flex');
+      }
+    });
+
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') {
+            installBtn.classList.add('hidden');
+          }
+          deferredPrompt = null;
+        }
+      });
+    }
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

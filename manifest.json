@@ -1,0 +1,21 @@
+{
+  "name": "Curso de Robótica y Electrónica para Secundaria · Inna'at",
+  "short_name": "RoboManuals",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0a0f1a",
+  "theme_color": "#0a0f1a",
+  "description": "Manuales prácticos interactivos y modulares de robótica usando ESP32 y simuladores.",
+  "icons": [
+    {
+      "src": "static/images/logo_transparent.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "static/images/logo_transparent.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
