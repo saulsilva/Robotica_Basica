@@ -31,13 +31,26 @@
     body.paper .grid-bg{opacity:.03}
 
     /* SIDEBAR */
-    .sidebar{position:fixed;left:0;top:0;bottom:0;width:280px;background:var(--bg2);border-right:1px solid var(--border);z-index:40;overflow-y:auto;transition:transform .3s ease,background .35s;padding:20px 0}
-    .sidebar.closed{transform:translateX(-280px)}
-    .sidebar-toggle{position:fixed;top:16px;left:16px;z-index:50;width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--border);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(8px)}
+    .sidebar{position:fixed;left:0;top:0;bottom:0;width:280px;background:var(--bg2);border-right:1px solid var(--border);z-index:60;overflow-y:auto;transition:transform .3s ease,background .35s;padding:20px 0}
+    .sidebar.closed{transform:translateX(-100%)}
+    .sidebar-toggle{position:fixed;top:14px;left:14px;z-index:55;width:38px;height:38px;border-radius:12px;background:var(--card);border:1px solid var(--border);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(8px)}
     .sidebar-toggle:hover{border-color:var(--accent)}
-    .sidebar.closed ~ .sidebar-toggle{left:16px}
-    .sidebar:not(.closed) ~ .sidebar-toggle{left:296px}
-    .sidebar:not(.closed) ~ .main-content{margin-left:280px}
+    
+    .main-content{margin-left:0;width:100%;transition:margin-left .3s ease}
+    
+    @media(min-width:769px){
+      .sidebar.closed ~ .sidebar-toggle{left:14px}
+      .sidebar:not(.closed) ~ .sidebar-toggle{left:294px}
+      .sidebar:not(.closed) ~ .main-content{margin-left:280px;width:calc(100% - 280px)}
+      .sidebar.closed ~ .main-content{margin-left:0;width:100%}
+    }
+    
+    @media(max-width:768px){
+      .sidebar{width:85vw;max-width:320px;box-shadow:0 0 50px rgba(0,0,0,.85)}
+      .sidebar-toggle{top:12px;left:12px;width:36px;height:36px}
+      .main-content{margin-left:0 !important;width:100% !important}
+    }
+
     .sidebar-link{display:flex;align-items:center;gap:10px;padding:8px 20px;font-size:13px;color:var(--muted);cursor:pointer;transition:all .15s;border-left:3px solid transparent}
     .sidebar-link:hover{background:rgba(255,255,255,.04);color:var(--text)}
     .sidebar-link.active{border-left-color:var(--accent);color:var(--accent);background:rgba(34,197,94,.06)}
@@ -81,6 +94,11 @@
     .thumb[data-active="true"]{border-color:var(--accent)}
     body.paper .thumb{background:#f1f5f9;border-color:#e2e8f0}
     body.paper .thumb[data-active="true"]{border-color:var(--accent)}
+
+    @media(max-width:640px){
+      .thumbs{gap:6px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
+      .thumb{width:46px;height:34px;font-size:10px}
+    }
 
     /* CAROUSEL BTNS */
     .carousel-btn{width:38px;height:38px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
@@ -132,8 +150,12 @@
     body.paper .thumbs,body.paper .carousel-btn{display:none !important}
 
     @media(max-width:768px){
-      .sidebar{width:260px}
-      .sidebar:not(.closed) ~ .main-content{margin-left:0}
+      .formula-box{flex-direction:column;align-items:flex-start;padding:14px 16px;gap:8px}
+      .formula-box .eq{font-size:18px;word-break:break-word}
+      .flow{gap:6px 0}
+      .flow-step{padding:6px 10px;font-size:11px}
+      .flow-arrow{font-size:14px;padding:0 2px}
+      .card{border-radius:16px}
     }
   </style>
 </head>
@@ -148,14 +170,19 @@
   <!-- ══════════════ SIDEBAR ══════════════ -->
   <nav class="sidebar no-print" id="sidebar">
     <div class="px-5 pb-5 mb-4 border-b border-white/10">
-      <a href="index.html" class="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-green-400 font-semibold mb-3 transition">
-        <i data-lucide="arrow-left" style="width:13px;height:13px"></i> Volver a Portada
-      </a>
+      <div class="flex items-center justify-between mb-3">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-green-400 font-semibold transition">
+          <i data-lucide="arrow-left" style="width:13px;height:13px"></i> Volver a Portada
+        </a>
+        <button onclick="toggleSidebar()" class="md:hidden p-1.5 rounded-lg text-slate-400 hover:text-white transition" title="Cerrar">
+          <i data-lucide="x" style="width:16px;height:16px"></i>
+        </button>
+      </div>
       <div class="flex items-center gap-3 mb-3">
-        <img src="static/images/logo_transparent.png" class="h-10 filter invert opacity-80" alt="Inna'at" onerror="this.style.display='none'">
+        <img src="static/images/logo_transparent.png" class="h-10 filter invert opacity-80" alt="Inna'at" onerror="this.src='/static/images/logo_transparent.png'">
         <div>
-          <div class="text-sm font-bold">Curso de Robótica y Electrónica para Secundaria</div>
-          <div class="text-[10px] font-mono opacity-40">TEMARIO</div>
+          <div class="text-sm font-bold leading-tight">Curso de Robótica y Electrónica para Secundaria</div>
+          <div class="text-[10px] font-mono opacity-40 mt-0.5">TEMARIO</div>
         </div>
       </div>
       <div class="flex gap-2 mt-3">
@@ -169,6 +196,13 @@
     </div>
 
     <div class="space-y-1">
+      
+        
+        <a href="#section-T01" class="sidebar-link" onclick="navigateTo('section-T01')">
+          <span class="link-badge bg-blue-500/15 text-blue-400 border border-blue-500/30">T</span>
+          <span class="truncate text-xs">Conociendo la electrónica</span>
+        </a>
+        
       
         
         <a href="#section-P01" class="sidebar-link" onclick="navigateTo('section-P01')">
@@ -196,40 +230,56 @@
     </div>
   </nav>
 
+  <!-- MOBILE SIDEBAR OVERLAY -->
+  <div id="sidebar-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-45 hidden md:hidden" onclick="toggleSidebar()"></div>
+
   <!-- SIDEBAR TOGGLE -->
-  <button class="sidebar-toggle no-print" id="sidebar-toggle" onclick="toggleSidebar()">
+  <button class="sidebar-toggle no-print" id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Abrir temario">
     <i data-lucide="panel-left" style="width:18px;height:18px"></i>
   </button>
 
   <!-- TOP BAR -->
-  <div class="no-print fixed top-4 right-5 z-40 flex items-center gap-2">
-    <a href="index.html" class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border border-white/10 bg-slate-900/80 hover:bg-slate-800 text-slate-200 transition backdrop-blur shadow-md">
+  <div class="no-print fixed top-3 right-3 sm:top-4 sm:right-5 z-40 flex items-center gap-1.5 sm:gap-2">
+    <a href="index.html" class="flex items-center gap-1 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold border border-white/10 bg-slate-900/90 hover:bg-slate-800 text-slate-200 transition backdrop-blur shadow-md" title="Ir a portada">
       <i data-lucide="home" style="width:13px;height:13px"></i> <span class="hidden sm:inline">PORTADA</span>
     </a>
-    <button onclick="togglePaper()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border border-white/10 bg-slate-900/80 hover:bg-slate-800 text-slate-200 transition backdrop-blur shadow-md">
+    <button onclick="togglePaper()" class="flex items-center gap-1 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold border border-white/10 bg-slate-900/90 hover:bg-slate-800 text-slate-200 transition backdrop-blur shadow-md" title="Alternar modo papel">
       <i data-lucide="file-text" style="width:13px;height:13px"></i> <span class="hidden sm:inline">MODO PAPEL</span>
     </button>
-    <button onclick="window.print()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-green-500 text-black hover:bg-green-400 transition shadow-lg shadow-green-500/20">
+    <button onclick="window.print()" class="flex items-center gap-1 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-green-500 text-black hover:bg-green-400 transition shadow-lg shadow-green-500/20" title="Imprimir / Guardar en PDF">
       <i data-lucide="printer" style="width:13px;height:13px"></i> <span class="hidden sm:inline">IMPRIMIR</span>
     </button>
   </div>
 
   <!-- ══════════════ MAIN CONTENT ══════════════ -->
-  <div class="main-content relative z-10 transition-[margin] duration-300" style="margin-left:280px">
-    <main class="max-w-5xl mx-auto px-5 py-10 md:px-10 md:py-14 space-y-16">
+  <div class="main-content relative z-10">
+    <main class="max-w-5xl mx-auto px-4 py-8 sm:px-6 md:px-10 md:py-14 pt-16 sm:pt-14 space-y-12 sm:space-y-16">
 
+    
+      
+      <div class="teoria-container card p-5 sm:p-8 page-break-after" id="section-T01">
+        <div class="flex items-center gap-2 mb-3 sm:mb-4 flex-wrap">
+          <span class="badge bg-blue-500/15 text-blue-400 border border-blue-500/30">TEORÍA</span>
+          <span class="badge bg-slate-800 text-slate-300 border border-slate-700">Bloque A — Electrónica Fundamental</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-black mb-4 sm:mb-6 leading-tight break-words">Conociendo la electrónica</h2>
+        <div class="prose prose-invert prose-green max-w-none prose-headings:font-outfit prose-a:text-green-400 text-xs sm:text-sm break-words">
+          <p>POKÉ-ELECTRÓNICA: REGISTRO DE COMPONENTES#001 - Resistencia (Resistor)Tipo: Pasivo / Defensor de CorrienteSímbolo Esquemático: Una línea en zigzag (estándar americano) o un rectángulo (estándar europeo).Información Clave: Su misión es limitar y controlar el flujo de corriente eléctrica en un circuito. Se mide en Ohmios ($\Omega$) y su valor se lee mediante franjas de colores impresas en su cuerpo. Actúa como un "freno" para proteger a otros componentes más delicados como los LEDs.Usos Principales:Dividir voltajes.Proteger componentes sensibles limitando la corriente.Configurar tiempos junto con capacitores.Conexiones: No tiene polaridad, por lo que no importa de qué lado la conectes. Se coloca en serie con el componente que deseas proteger o en paralelo para dividir señales.#002 - Diodo LED (Light Emitting Diode)Tipo: Activo / Emisor de LuzSímbolo Esquemático: Un triángulo apuntando a una línea vertical, con dos flechas pequeñas que apuntan hacia afuera (indicando que emite luz).Información Clave: Es un semiconductor que transforma la energía eléctrica en luz de manera muy eficiente. A diferencia de las bombillas tradicionales, el LED es muy sensible a la polaridad: si lo conectas al revés, simplemente no enciende (¡pero no explota si respetas el voltaje!). Su pata larga es el Ánodo (+) y la corta el Cátodo (-).Usos Principales:Indicadores de encendido y estado.Pantallas e iluminación.Señalización en robots y proyectos visuales.Conexiones: Tiene polaridad. El Ánodo (+) se conecta al positivo (o a través de una resistencia hacia el pin de voltaje) y el Cátodo (-) se conecta a tierra (GND). ¡Nunca lo conectes sin una resistencia limitadora o se fundirá instantáneamente!#003 - Diodo Rectificador (Ej. 1N4007)Tipo: Semiconductor / Válvula UnidireccionalSímbolo Esquemático: Un triángulo apuntando a una barra vertical.Información Clave: Funciona como una válvula antirretorno para la electricidad. Permite que la corriente fluya en una sola dirección (del ánodo al cátodo) y la bloquea si intenta regresar en sentido contrario. Cuenta con una franja gris en su cuerpo que indica el lado del cátodo.Usos Principales:Proteger circuitos contra inversión accidental de polaridad (si conectas la pila al revés).Convertir corriente alterna (AC) en corriente directa (DC).Descargar picos de voltaje en motores (diodo de rueda libre / flyback).Conexiones: Tiene polaridad estricta. La franja gris (Cátodo) va hacia el lado negativo o hacia donde no quieres que regrese la corriente, y el lado opuesto (Ánodo) va hacia la fuente positiva.#004 - Capacitor / Condensador (Electrolítico o Cerámico)Tipo: Pasivo / Almacenador de EnergíaSímbolo Esquemático: Dos líneas paralelas (una recta y otra curvada para los polarizados, o dos rectas para los no polarizados).Información Clave: Funciona como una mini-batería de carga y descarga ultrarrápida. Almacena energía en un campo eléctrico y la libera cuando el circuito lo necesita. Los capacitores electrolíticos tienen polaridad y valor alto (en microfaradios $\mu F$), mientras que los cerámicos son pequeños y sin polaridad.Usos Principales:Filtrar ruido eléctrico y estabilizar voltajes en fuentes de alimentación.Suavizar parpadeos y picos de corriente en motores y sensores.Temporización y acoplamiento de señales.Conexiones:Electrolíticos (Polarizados): Tienen una franja con signos negativos (-) que señala la pata corta (Cátodo). La pata larga es el positivo. Conéctalos respetando esto o podrían dañarse.Cerámicos (No polarizados): Se pueden conectar en cualquier dirección, usualmente en paralelo entre VCC y GND para limpiar interferencias.#005 - Batería (Fuente de Alimentación)Tipo: Activa / Proveedor de EnergíaSímbolo Esquemático: Líneas paralelas alternadas de tamaño largo (positivo) y corto (negativo).Información Clave: Es el "corazón" energético del circuito. Almacena energía química y la convierte en energía eléctrica de corriente directa (DC). Posee un voltaje nominal (ej. 3.7V, 5V, 9V, 12V) que indica la "fuerza" con la que impulsa a los electrones a través del circuito.Usos Principales:Proveer energía portátil a dispositivos, tarjetas de desarrollo y robots móviles.Conexiones: Tiene polaridad fija. El terminal Positivo (+) (cable rojo o marca +) se conecta a la entrada de alimentación del circuito, y el Negativo (-) (cable negro o marca -) se conecta al bus de tierra (GND).#006 - Multímetro (El Inspector / Herramienta de Diagnóstico)Tipo: Instrumento de Medición MultifunciónSímbolo Esquemático: Un círculo con una letra "V", "A" o "$\Omega$" en su interior, con dos sondas (cables rojo y negro).Información Clave: El arma secreta de cualquier técnico o inventor. Permite medir las magnitudes invisibles de la electricidad: Voltaje (Volts), Corriente (Amperes) y Resistencia (Ohmios), además de probar continuidad (si un cable está roto o conectado).Usos Principales:Diagnosticar fallas y cortocircuitos en circuitos armados.Medir cuánta carga le queda a una batería.Verificar valores de resistencias antes de colocarlas.Conexiones:El cable negro siempre va en el puerto común (COM).El cable rojo se conecta en el puerto de Voltios/Ohmios ($\text{V}\Omega\text{mA}$) para medir voltaje y resistencia, o en el puerto de Amperes (10A) para medir corriente (cuidando de poner el selector en la función correcta antes de tocar el circuito).</p>
+        </div>
+      </div>
+      
     
       
       <div class="practica-container page-break-after" id="section-P01">
 
         <!-- HEADER -->
-        <header class="rev rev-1 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10 pb-8 border-b border-white/10">
-          <div class="flex items-center gap-5">
-            <div class="w-20 h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-2 drop-shadow-xl">
-              <img src="static/images/logo_transparent.png" class="w-full h-full object-contain filter invert opacity-90" alt="Inna'at" onerror="this.parentElement.innerHTML='<i data-lucide=\'bot\' class=\'text-green-400 w-10 h-10\'></i>'">
+        <header class="rev rev-1 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 mb-8 sm:mb-10 pb-6 sm:pb-8 border-b border-white/10">
+          <div class="flex items-start sm:items-center gap-3 sm:gap-5 w-full">
+            <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-2 drop-shadow-xl flex-shrink-0">
+              <img src="static/images/logo_transparent.png" class="w-full h-full object-contain filter invert opacity-90" alt="Inna'at" onerror="this.parentElement.innerHTML='<i data-lucide=\'bot\' class=\'text-green-400 w-8 h-8 sm:w-10 sm:h-10\'></i>'">
             </div>
-            <div>
-              <div class="flex items-center gap-2 mb-1 flex-wrap">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-1.5 sm:gap-2 mb-1.5 flex-wrap">
                 <span class="badge bg-green-500/15 text-green-400 border border-green-500/30">P-01</span>
                 <span class="badge bg-blue-500/15 text-blue-400 border border-blue-500/30">Electrónica</span>
                 <span class="badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/30">Nivel 🟢 Básico</span>
@@ -237,30 +287,30 @@
                 <span class="badge bg-purple-500/15 text-purple-400 border border-purple-500/30 font-black">DOCENTE</span>
                 
               </div>
-              <h1 class="text-3xl md:text-4xl font-black italic uppercase leading-none">⚡ El multímetro y la Ley de Ohm</h1>
+              <h1 class="text-2xl sm:text-3xl md:text-4xl font-black italic uppercase leading-tight sm:leading-none break-words">⚡ El multímetro y la Ley de Ohm</h1>
             </div>
           </div>
         </header>
 
         <!-- PROBLEMA DETONADOR -->
         
-        <section class="rev rev-2 mb-8">
-          <div class="relative overflow-hidden rounded-3xl p-6 border-l-8 border-green-500" style="background:linear-gradient(135deg,rgba(34,197,94,.1) 0%,rgba(34,197,94,.03) 100%)">
-            <div class="absolute top-3 right-5 text-[80px] font-black opacity-5 leading-none select-none font-mono">?</div>
+        <section class="rev rev-2 mb-6 sm:mb-8">
+          <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl p-4 sm:p-6 border-l-4 sm:border-l-8 border-green-500" style="background:linear-gradient(135deg,rgba(34,197,94,.1) 0%,rgba(34,197,94,.03) 100%)">
+            <div class="absolute top-2 right-4 text-[60px] sm:text-[80px] font-black opacity-5 leading-none select-none font-mono">?</div>
             <div class="sec-title text-green-400"><i data-lucide="zap" style="width:14px;height:14px"></i> Problema Detonador</div>
-            <p class="text-xl md:text-2xl font-bold italic leading-snug">"¿Cómo podemos detectar los fallos invisibles que impiden que nuestro robot gane la carrera o, peor aún, evitar que su cerebro electrónico se queme en plena competencia?"</p>
+            <p class="text-base sm:text-xl md:text-2xl font-bold italic leading-snug">"¿Cómo podemos detectar los fallos invisibles que impiden que nuestro robot gane la carrera o, peor aún, evitar que su cerebro electrónico se queme en plena competencia?"</p>
           </div>
         </section>
         
 
         <!-- OBJETIVO + FÓRMULA -->
-        <div class="rev rev-2 grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-          <div class="card p-5">
+        <div class="rev rev-2 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-6 sm:mb-8">
+          <div class="card p-4 sm:p-5">
             <div class="sec-title text-blue-400"><i data-lucide="target" style="width:14px;height:14px"></i> Objetivo</div>
-            <p class="text-sm leading-relaxed opacity-80">Dominar el uso del multímetro digital para diagnosticar circuitos y aplicar la Ley de Ohm en el diseño de conexiones seguras y eficientes para un robot seguidor de línea.</p>
+            <p class="text-xs sm:text-sm leading-relaxed opacity-80">Dominar el uso del multímetro digital para diagnosticar circuitos y aplicar la Ley de Ohm en el diseño de conexiones seguras y eficientes para un robot seguidor de línea.</p>
           </div>
           
-          <div class="card p-5">
+          <div class="card p-4 sm:p-5">
             <div class="sec-title text-green-400"><i data-lucide="function-square" style="width:14px;height:14px"></i> Fórmula Clave</div>
             <div class="formula-box h-full"><div class="eq">V = I × R</div></div>
           </div>
@@ -269,56 +319,52 @@
 
         <!-- MARCO TEÓRICO -->
         
-        <section class="rev rev-3 card p-6 mb-8">
+        <section class="rev rev-3 card p-4 sm:p-6 mb-6 sm:mb-8">
           <div class="sec-title text-green-400"><i data-lucide="book-open" style="width:14px;height:14px"></i> Marco Teórico</div>
-          <div class="text-sm leading-relaxed opacity-80 prose prose-invert max-w-none"><p>Para que un robot sea un campeón, debe gestionar su energía con precisión. La electricidad se entiende mejor con la analogía hidráulica: el Voltaje (V) es la presión del agua que empuja la energía; la Corriente (I) es el caudal o cantidad de electrones fluyendo; y la Resistencia (R) es el diámetro de la manguera que frena el paso. La Ley de Ohm ($V=I \cdot R$) es la regla matemática que relaciona estas fuerzas, permitiéndonos calcular, por ejemplo, qué resistencia protege a un LED de los 9V de una batería. Para "ver" estas magnitudes, usamos el multímetro, una herramienta de diagnóstico con pantalla, selector de funciones y puertos (COM para el cable negro y $V\Omega mA$ para el rojo) que nos permite validar nuestros cálculos antes de encender motores.</p></div>
+          <div class="text-xs sm:text-sm leading-relaxed opacity-80 prose prose-invert max-w-none break-words"><p>Para que un robot sea un campeón, debe gestionar su energía con precisión. La electricidad se entiende mejor con la analogía hidráulica: el Voltaje (V) es la presión del agua que empuja la energía; la Corriente (I) es el caudal o cantidad de electrones fluyendo; y la Resistencia (R) es el diámetro de la manguera que frena el paso. La Ley de Ohm ($V=I \cdot R$) es la regla matemática que relaciona estas fuerzas, permitiéndonos calcular, por ejemplo, qué resistencia protege a un LED de los 9V de una batería. Para "ver" estas magnitudes, usamos el multímetro, una herramienta de diagnóstico con pantalla.</p></div>
         </section>
         
 
         <!-- APLICACIÓN EN ROBÓTICA -->
         
-        <section class="rev rev-3 mb-8">
+        <section class="rev rev-3 mb-6 sm:mb-8">
           <div class="robot-app">
             <div class="sec-title" style="color:#60a5fa"><i data-lucide="bot" style="width:14px;height:14px"></i> Aplicación en Robótica</div>
-            <p class="text-sm opacity-80 leading-relaxed">Este conocimiento permite evitar dañar componentes como LEDs, sensores o el ESP32. Un pin del ESP32 soporta máximo 40mA. Sin una resistencia calculada correctamente, el LED o el pin pueden quemarse permanentemente. También es la base para diagnosticar fallas en el seguidor de línea.</p>
+            <p class="text-xs sm:text-sm opacity-80 leading-relaxed">Este conocimiento permite evitar dañar componentes como LEDs, sensores o el ESP32. Un pin del ESP32 soporta máximo 40mA. Sin una resistencia calculada correctamente, el LED o el pin pueden quemarse permanentemente. También es la base para diagnosticar fallas en tu robot.</p>
           </div>
         </section>
         
 
         <!-- COMPONENTES -->
         
-        <section class="rev rev-4 card p-6 mb-8">
+        <section class="rev rev-4 card p-4 sm:p-6 mb-6 sm:mb-8">
           <div class="sec-title text-yellow-400"><i data-lucide="cpu" style="width:14px;height:14px"></i> Componentes Necesarios</div>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-3">
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Multímetro digital</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Multímetro digital</div>
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Resistencias 220Ω</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Resistencias 220Ω</div>
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>1kΩ</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>1kΩ</div>
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>10kΩ</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>10kΩ</div>
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Batería 9V con conector</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Batería 9V con conector</div>
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Protoboard</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Protoboard</div>
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>LEDs rojo</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>LEDs  diferentes colotes</div>
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>verde</div>
-            
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>amarillo</div>
-            
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Cables jumper M-M</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Cables jumper M-M</div>
             
           </div>
         </section>
         
 
         <!-- DIAGRAMA DE FLUJO -->
-        <section class="rev rev-4 card p-6 mb-8">
+        <section class="rev rev-4 card p-4 sm:p-6 mb-6 sm:mb-8">
           <div class="sec-title text-green-400"><i data-lucide="git-branch" style="width:14px;height:14px"></i> Diagrama de Flujo</div>
-          <div class="flow gap-y-3">
+          <div class="flow gap-y-2 sm:gap-y-3">
             <div class="flow-step">🟢 Inicio</div>
             <div class="flow-arrow">→</div>
             <div class="flow-step">Armar circuito</div>
@@ -362,7 +408,7 @@
             <!-- SLIDES CAROUSEL -->
             <div class="carousel-wrap" data-carousel>
               
-              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-6 card p-6" data-active=true>
+              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6 card p-4 sm:p-6" data-active=true>
                 <!-- Media -->
                 <div class="lg:col-span-3">
                   
@@ -370,37 +416,42 @@
                     
                       
                     
-                    <iframe src="https://www.youtube.com/embed/Rr1FjQMEknE" class="rounded-2xl w-full aspect-video bg-black/30 border border-white/10" frameborder="0" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/Z1pxudDk-BM?si=wUgchGdU7qjTQ1sL" class="rounded-xl sm:rounded-2xl w-full aspect-video bg-black/30 border border-white/10" frameborder="0" allowfullscreen></iframe>
                   
                 </div>
                 <!-- Content -->
-                <div class="lg:col-span-2 space-y-4">
-                  <div class="text-green-400 font-black text-lg italic uppercase mb-1">Parte 1: Reconocimiento del Multímetro</div>
-                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-4">
-                    <div class="text-xs font-mono text-green-400 mb-3 font-bold">PASOS</div>
-                    <ol class="space-y-2 text-xs opacity-75 list-none">
+                <div class="lg:col-span-2 space-y-3 sm:space-y-4">
+                  <div class="text-green-400 font-black text-base sm:text-lg italic uppercase leading-tight mb-1">Parte 1: Reconocimiento del Multímetro</div>
+                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-3 sm:p-4">
+                    <div class="text-[11px] sm:text-xs font-mono text-green-400 mb-2.5 sm:mb-3 font-bold">PASOS</div>
+                    <ol class="space-y-2 text-xs sm:text-xs opacity-75 list-none">
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> Observa el multímetro e identifica pantalla, perilla y terminales</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> <span>Observa el multímetro e identifica pantalla, perilla y terminales</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> Ubica las entradas: COM (negro), VΩmA (rojo) y 10A</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> <span>Ubica las entradas: COM (negro), VΩmA (rojo) y 10A</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> Gira la perilla a V⎓ (voltaje corriente directa)</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> <span>Gira la perilla a V⎓ (voltaje corriente directa)</span></li>
                       
                     </ol>
                   </div>
                   
                   <div class="rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-3">
-                    <div class="text-xs font-mono text-yellow-400 mb-2">📐 Registro de Datos</div>
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="text-[11px] sm:text-xs font-mono text-yellow-400 mb-2 font-bold">📐 Registro de Datos</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">Batería nominal (V)</label>
-                        <input type="text" placeholder="9.0" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">Multimetro de perilla(si/no)</label>
+                        <input type="text" placeholder="" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">Voltaje medido (V)</label>
-                        <input type="text" placeholder="0.0" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">Tiene escalas(si/no)</label>
+                        <input type="text" placeholder="" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
+                      </div>
+                      
+                      <div>
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">Tiene 3 entradas(si/no)</label>
+                        <input type="text" placeholder="" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                     </div>
@@ -409,44 +460,50 @@
                 </div>
               </div>
               
-              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-6 card p-6" >
+              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6 card p-4 sm:p-6" >
                 <!-- Media -->
                 <div class="lg:col-span-3">
                   
                     
                     
-                    <img src="static/uploads/P1.2.png" class="rounded-2xl w-full object-cover aspect-video bg-black/30 cursor-pointer hover:opacity-80 transition-opacity border border-white/10" onclick="openLightbox(this.src)" alt="Parte 2: Medición de Voltaje">
+                    <img src="static/uploads/P1.2.png" class="rounded-xl sm:rounded-2xl w-full object-cover aspect-video bg-black/30 cursor-pointer hover:opacity-80 transition-opacity border border-white/10" onclick="openLightbox(this.src)" alt="Parte 2: Medición de Voltaje">
                     
                   
                 </div>
                 <!-- Content -->
-                <div class="lg:col-span-2 space-y-4">
-                  <div class="text-green-400 font-black text-lg italic uppercase mb-1">Parte 2: Medición de Voltaje</div>
-                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-4">
-                    <div class="text-xs font-mono text-green-400 mb-3 font-bold">PASOS</div>
-                    <ol class="space-y-2 text-xs opacity-75 list-none">
+                <div class="lg:col-span-2 space-y-3 sm:space-y-4">
+                  <div class="text-green-400 font-black text-base sm:text-lg italic uppercase leading-tight mb-1">Parte 2: Medición de Voltaje</div>
+                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-3 sm:p-4">
+                    <div class="text-[11px] sm:text-xs font-mono text-green-400 mb-2.5 sm:mb-3 font-bold">PASOS</div>
+                    <ol class="space-y-2 text-xs sm:text-xs opacity-75 list-none">
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> Arma el circuito: batería + resistencia + LED en serie</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> <span>Identifica la bateria y su polaridad(rojo->positivo y negro->negativo).</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> Coloca las puntas del multímetro EN PARALELO con el LED</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> <span>Conecta las terminales de la bateria, ternminal negra al COM y la terminal Roja a V⎓ del multimetro.</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> Registra el voltaje en el LED y en la resistencia</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> <span>Gira la perilla a V⎓  y si es de escala tu multimetro pon la perilla en 20v, SIEMPRE ELIGE EL VALOR MAS ALTO Y PROXIMO AL VOLTAJE A MEDIR EN ESTE CASO 9V.</span></li>
+                      
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">04.</span> <span>Mide el voltaje de la bateria, con cuidado con las puntas une punta roja con el positivo de la bateria y el negro con el negativo de la bateria.</span></li>
+                      
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">05.</span> <span>Espera un segundo y tama la medición.</span></li>
+                      
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">06.</span> <span>Cambia las puntas de posicion y ahora punta roja con el negativo y negra con el</span></li>
                       
                     </ol>
                   </div>
                   
                   <div class="rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-3">
-                    <div class="text-xs font-mono text-yellow-400 mb-2">📐 Registro de Datos</div>
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="text-[11px] sm:text-xs font-mono text-yellow-400 mb-2 font-bold">📐 Registro de Datos</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">V en el LED (V)</label>
-                        <input type="text" placeholder="~2.0" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">V en el LED (V)</label>
+                        <input type="text" placeholder="~2.0" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">V en la resistencia (V)</label>
-                        <input type="text" placeholder="~7.0" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">V en la resistencia (V)</label>
+                        <input type="text" placeholder="~7.0" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                     </div>
@@ -455,46 +512,46 @@
                 </div>
               </div>
               
-              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-6 card p-6" >
+              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6 card p-4 sm:p-6" >
                 <!-- Media -->
                 <div class="lg:col-span-3">
                   
                     
                     
-                    <div class="rounded-2xl aspect-video bg-white/5 border border-white/10 flex flex-col items-center justify-center text-white/20 text-sm font-mono p-4 text-center">
-                      <i data-lucide="image" class="w-10 h-10 mb-2"></i>P01.3.png
+                    <div class="rounded-xl sm:rounded-2xl aspect-video bg-white/5 border border-white/10 flex flex-col items-center justify-center text-white/20 text-xs sm:text-sm font-mono p-4 text-center">
+                      <i data-lucide="image" class="w-8 h-8 sm:w-10 sm:h-10 mb-2"></i>P01.3.png
                     </div>
                     
                   
                 </div>
                 <!-- Content -->
-                <div class="lg:col-span-2 space-y-4">
-                  <div class="text-green-400 font-black text-lg italic uppercase mb-1">Parte 3: Cálculo Teórico con Ley de Ohm</div>
-                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-4">
-                    <div class="text-xs font-mono text-green-400 mb-3 font-bold">PASOS</div>
-                    <ol class="space-y-2 text-xs opacity-75 list-none">
+                <div class="lg:col-span-2 space-y-3 sm:space-y-4">
+                  <div class="text-green-400 font-black text-base sm:text-lg italic uppercase leading-tight mb-1">Parte 3: Cálculo Teórico con Ley de Ohm</div>
+                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-3 sm:p-4">
+                    <div class="text-[11px] sm:text-xs font-mono text-green-400 mb-2.5 sm:mb-3 font-bold">PASOS</div>
+                    <ol class="space-y-2 text-xs sm:text-xs opacity-75 list-none">
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> Identifica el valor de la resistencia usada (código de colores)</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> <span>Identifica el valor de la resistencia usada (código de colores)</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> Aplica I = V ÷ R con el voltaje medido</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> <span>Aplica I = V ÷ R con el voltaje medido</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> Anota el resultado esperado antes de medir</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> <span>Anota el resultado esperado antes de medir</span></li>
                       
                     </ol>
                   </div>
                   
                   <div class="rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-3">
-                    <div class="text-xs font-mono text-yellow-400 mb-2">📐 Registro de Datos</div>
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="text-[11px] sm:text-xs font-mono text-yellow-400 mb-2 font-bold">📐 Registro de Datos</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">Resistencia (Ω)</label>
-                        <input type="text" placeholder="220" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">Resistencia (Ω)</label>
+                        <input type="text" placeholder="220" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">I calculada (mA)</label>
-                        <input type="text" placeholder="I=V/R" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">I calculada (mA)</label>
+                        <input type="text" placeholder="I=V/R" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                     </div>
@@ -503,46 +560,46 @@
                 </div>
               </div>
               
-              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-6 card p-6" >
+              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6 card p-4 sm:p-6" >
                 <!-- Media -->
                 <div class="lg:col-span-3">
                   
                     
                     
-                    <div class="rounded-2xl aspect-video bg-white/5 border border-white/10 flex flex-col items-center justify-center text-white/20 text-sm font-mono p-4 text-center">
-                      <i data-lucide="image" class="w-10 h-10 mb-2"></i>P01.4.png
+                    <div class="rounded-xl sm:rounded-2xl aspect-video bg-white/5 border border-white/10 flex flex-col items-center justify-center text-white/20 text-xs sm:text-sm font-mono p-4 text-center">
+                      <i data-lucide="image" class="w-8 h-8 sm:w-10 sm:h-10 mb-2"></i>P01.4.png
                     </div>
                     
                   
                 </div>
                 <!-- Content -->
-                <div class="lg:col-span-2 space-y-4">
-                  <div class="text-green-400 font-black text-lg italic uppercase mb-1">Parte 4: Medición de Corriente</div>
-                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-4">
-                    <div class="text-xs font-mono text-green-400 mb-3 font-bold">PASOS</div>
-                    <ol class="space-y-2 text-xs opacity-75 list-none">
+                <div class="lg:col-span-2 space-y-3 sm:space-y-4">
+                  <div class="text-green-400 font-black text-base sm:text-lg italic uppercase leading-tight mb-1">Parte 4: Medición de Corriente</div>
+                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-3 sm:p-4">
+                    <div class="text-[11px] sm:text-xs font-mono text-green-400 mb-2.5 sm:mb-3 font-bold">PASOS</div>
+                    <ol class="space-y-2 text-xs sm:text-xs opacity-75 list-none">
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> Abre el circuito desconectando un cable</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> <span>Abre el circuito desconectando un cable</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> Configura el multímetro en mA y conéctalo EN SERIE</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> <span>Configura el multímetro en mA y conéctalo EN SERIE</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> Lee y registra la corriente real del circuito</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> <span>Lee y registra la corriente real del circuito</span></li>
                       
                     </ol>
                   </div>
                   
                   <div class="rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-3">
-                    <div class="text-xs font-mono text-yellow-400 mb-2">📐 Registro de Datos</div>
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="text-[11px] sm:text-xs font-mono text-yellow-400 mb-2 font-bold">📐 Registro de Datos</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">I calculada (mA)</label>
-                        <input type="text" placeholder="—" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">I calculada (mA)</label>
+                        <input type="text" placeholder="—" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">I medida (mA)</label>
-                        <input type="text" placeholder="0.0" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">I medida (mA)</label>
+                        <input type="text" placeholder="0.0" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                     </div>
@@ -551,55 +608,55 @@
                 </div>
               </div>
               
-              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-6 card p-6" >
+              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6 card p-4 sm:p-6" >
                 <!-- Media -->
                 <div class="lg:col-span-3">
                   
                     
                     
-                    <div class="rounded-2xl aspect-video bg-white/5 border border-white/10 flex flex-col items-center justify-center text-white/20 text-sm font-mono p-4 text-center">
-                      <i data-lucide="image" class="w-10 h-10 mb-2"></i>P01.5.png
+                    <div class="rounded-xl sm:rounded-2xl aspect-video bg-white/5 border border-white/10 flex flex-col items-center justify-center text-white/20 text-xs sm:text-sm font-mono p-4 text-center">
+                      <i data-lucide="image" class="w-8 h-8 sm:w-10 sm:h-10 mb-2"></i>P01.5.png
                     </div>
                     
                   
                 </div>
                 <!-- Content -->
-                <div class="lg:col-span-2 space-y-4">
-                  <div class="text-green-400 font-black text-lg italic uppercase mb-1">Partes 5 y 6: Circuitos y Análisis</div>
-                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-4">
-                    <div class="text-xs font-mono text-green-400 mb-3 font-bold">PASOS</div>
-                    <ol class="space-y-2 text-xs opacity-75 list-none">
+                <div class="lg:col-span-2 space-y-3 sm:space-y-4">
+                  <div class="text-green-400 font-black text-base sm:text-lg italic uppercase leading-tight mb-1">Partes 5 y 6: Circuitos y Análisis</div>
+                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-3 sm:p-4">
+                    <div class="text-[11px] sm:text-xs font-mono text-green-400 mb-2.5 sm:mb-3 font-bold">PASOS</div>
+                    <ol class="space-y-2 text-xs sm:text-xs opacity-75 list-none">
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> Construye circuito con resistencias en SERIE y mide</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> <span>Construye circuito con resistencias en SERIE y mide</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> Construye circuito con resistencias en PARALELO y mide</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> <span>Construye circuito con resistencias en PARALELO y mide</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> Calcula %Error =</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> <span>Calcula %Error =</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">04.</span> (Teórico − Real)</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">04.</span> <span>(Teórico − Real)</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">05.</span> ÷ Teórico × 100</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">05.</span> <span>÷ Teórico × 100</span></li>
                       
                     </ol>
                   </div>
                   
                   <div class="rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-3">
-                    <div class="text-xs font-mono text-yellow-400 mb-2">📐 Registro de Datos</div>
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="text-[11px] sm:text-xs font-mono text-yellow-400 mb-2 font-bold">📐 Registro de Datos</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">V serie medido (V)</label>
-                        <input type="text" placeholder="—" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">V serie medido (V)</label>
+                        <input type="text" placeholder="—" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">V paralelo medido (V)</label>
-                        <input type="text" placeholder="—" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">V paralelo medido (V)</label>
+                        <input type="text" placeholder="—" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">%Error promedio</label>
-                        <input type="text" placeholder="%" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">%Error promedio</label>
+                        <input type="text" placeholder="%" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                     </div>
@@ -647,49 +704,49 @@
             <!-- SLIDES CAROUSEL -->
             <div class="carousel-wrap" data-carousel>
               
-              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-6 card p-6" data-active=true>
+              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6 card p-4 sm:p-6" data-active=true>
                 <!-- Media -->
                 <div class="lg:col-span-3">
                   
                     
                     
-                    <img src="static/uploads/Captura de pantalla 2026-05-14 a la(s) 11.42.12 p.m..png" class="rounded-2xl w-full object-cover aspect-video bg-black/30 cursor-pointer hover:opacity-80 transition-opacity border border-white/10" onclick="openLightbox(this.src)" alt="Revisa el diagrama">
+                    <img src="static/uploads/Captura de pantalla 2026-05-14 a la(s) 11.42.12 p.m..png" class="rounded-xl sm:rounded-2xl w-full object-cover aspect-video bg-black/30 cursor-pointer hover:opacity-80 transition-opacity border border-white/10" onclick="openLightbox(this.src)" alt="Revisa el diagrama">
                     
                   
                 </div>
                 <!-- Content -->
-                <div class="lg:col-span-2 space-y-4">
-                  <div class="text-green-400 font-black text-lg italic uppercase mb-1">Revisa el diagrama</div>
-                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-4">
-                    <div class="text-xs font-mono text-green-400 mb-3 font-bold">PASOS</div>
-                    <ol class="space-y-2 text-xs opacity-75 list-none">
+                <div class="lg:col-span-2 space-y-3 sm:space-y-4">
+                  <div class="text-green-400 font-black text-base sm:text-lg italic uppercase leading-tight mb-1">Revisa el diagrama</div>
+                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-3 sm:p-4">
+                    <div class="text-[11px] sm:text-xs font-mono text-green-400 mb-2.5 sm:mb-3 font-bold">PASOS</div>
+                    <ol class="space-y-2 text-xs sm:text-xs opacity-75 list-none">
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> 1. eee</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> <span>1. eee</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> 2. 3434</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> <span>2. 3434</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> 3. fefdfs</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> <span>3. fefdfs</span></li>
                       
                     </ol>
                   </div>
                   
                   <div class="rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-3">
-                    <div class="text-xs font-mono text-yellow-400 mb-2">📐 Registro de Datos</div>
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="text-[11px] sm:text-xs font-mono text-yellow-400 mb-2 font-bold">📐 Registro de Datos</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">Batería nominal (V)</label>
-                        <input type="text" placeholder="" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">Batería nominal (V)</label>
+                        <input type="text" placeholder="" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">Voltaje medido (V)</label>
-                        <input type="text" placeholder="" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">Voltaje medido (V)</label>
+                        <input type="text" placeholder="" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">%Error promedio</label>
-                        <input type="text" placeholder="" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">%Error promedio</label>
+                        <input type="text" placeholder="" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                     </div>
@@ -698,51 +755,51 @@
                 </div>
               </div>
               
-              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-6 card p-6" >
+              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6 card p-4 sm:p-6" >
                 <!-- Media -->
                 <div class="lg:col-span-3">
                   
                     
                     
-                    <div class="rounded-2xl aspect-video bg-white/5 border border-white/10 flex flex-col items-center justify-center text-white/20 text-sm font-mono p-4 text-center">
-                      <i data-lucide="image" class="w-10 h-10 mb-2"></i>P01.7.png
+                    <div class="rounded-xl sm:rounded-2xl aspect-video bg-white/5 border border-white/10 flex flex-col items-center justify-center text-white/20 text-xs sm:text-sm font-mono p-4 text-center">
+                      <i data-lucide="image" class="w-8 h-8 sm:w-10 sm:h-10 mb-2"></i>P01.7.png
                     </div>
                     
                   
                 </div>
                 <!-- Content -->
-                <div class="lg:col-span-2 space-y-4">
-                  <div class="text-green-400 font-black text-lg italic uppercase mb-1">Parte 1: Reconocimiento del Multímetro</div>
-                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-4">
-                    <div class="text-xs font-mono text-green-400 mb-3 font-bold">PASOS</div>
-                    <ol class="space-y-2 text-xs opacity-75 list-none">
+                <div class="lg:col-span-2 space-y-3 sm:space-y-4">
+                  <div class="text-green-400 font-black text-base sm:text-lg italic uppercase leading-tight mb-1">Parte 1: Reconocimiento del Multímetro</div>
+                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-3 sm:p-4">
+                    <div class="text-[11px] sm:text-xs font-mono text-green-400 mb-2.5 sm:mb-3 font-bold">PASOS</div>
+                    <ol class="space-y-2 text-xs sm:text-xs opacity-75 list-none">
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> 1. dfdf</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> <span>1. dfdf</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> 3. sssdsf</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">02.</span> <span>3. sssdsf</span></li>
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> 4. dfdgfbdf</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">03.</span> <span>4. dfdgfbdf</span></li>
                       
                     </ol>
                   </div>
                   
                   <div class="rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-3">
-                    <div class="text-xs font-mono text-yellow-400 mb-2">📐 Registro de Datos</div>
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="text-[11px] sm:text-xs font-mono text-yellow-400 mb-2 font-bold">📐 Registro de Datos</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">Batería nominal (V)</label>
-                        <input type="text" placeholder="" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">Batería nominal (V)</label>
+                        <input type="text" placeholder="" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">Voltaje medido (V)</label>
-                        <input type="text" placeholder="" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">Voltaje medido (V)</label>
+                        <input type="text" placeholder="" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                       <div>
-                        <label class="text-[10px] opacity-50 block mb-1">%Error promedio</label>
-                        <input type="text" placeholder="" class="w-full text-sm font-mono bg-transparent border-b border-dashed border-white/20 text-white focus:border-green-400 focus:outline-none py-1">
+                        <label class="text-[10px] opacity-60 block mb-1 font-mono">%Error promedio</label>
+                        <input type="text" placeholder="" class="w-full text-xs sm:text-sm font-mono bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:border-green-400 focus:outline-none transition">
                       </div>
                       
                     </div>
@@ -767,22 +824,22 @@
 
         <!-- ERRORES COMUNES -->
         
-        <section class="rev rev-6 mb-8">
-          <div class="sec-title text-red-400 mb-4"><i data-lucide="alert-triangle" style="width:14px;height:14px"></i> Errores Comunes</div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <section class="rev rev-6 mb-6 sm:mb-8">
+          <div class="sec-title text-red-400 mb-3 sm:mb-4"><i data-lucide="alert-triangle" style="width:14px;height:14px"></i> Errores Comunes</div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
             
             <div class="err-card">
               <div class="err-icon"><i data-lucide="x-circle" style="width:16px;height:16px;color:#ef4444"></i></div>
               <div>
-                <div class="text-sm font-bold text-red-400 mb-1">Medir corriente en paralelo</div>
-                <p class="text-xs opacity-70">Quema el fusible del multímetro. La corriente siempre va en SERIE.</p>
+                <div class="text-xs sm:text-sm font-bold text-red-400 mb-1">Medir corriente en paralelo</div>
+                <p class="text-xs opacity-70">Quema el fusible del multímetro. La corriente de cualquier dispositivo siempre se mide en SERIE.</p>
               </div>
             </div>
             
             <div class="err-card">
               <div class="err-icon"><i data-lucide="x-circle" style="width:16px;height:16px;color:#ef4444"></i></div>
               <div>
-                <div class="text-sm font-bold text-red-400 mb-1">LED sin resistencia</div>
+                <div class="text-xs sm:text-sm font-bold text-red-400 mb-1">LED sin resistencia</div>
                 <p class="text-xs opacity-70">Sin resistencia la corriente es ilimitada y el LED se quema en segundos.</p>
               </div>
             </div>
@@ -790,7 +847,7 @@
             <div class="err-card">
               <div class="err-icon"><i data-lucide="x-circle" style="width:16px;height:16px;color:#ef4444"></i></div>
               <div>
-                <div class="text-sm font-bold text-red-400 mb-1">Perilla en posición incorrecta</div>
+                <div class="text-xs sm:text-sm font-bold text-red-400 mb-1">Perilla en posición incorrecta</div>
                 <p class="text-xs opacity-70">Medir voltaje con perilla en corriente puede dañar el multímetro.</p>
               </div>
             </div>
@@ -798,7 +855,7 @@
             <div class="err-card">
               <div class="err-icon"><i data-lucide="x-circle" style="width:16px;height:16px;color:#ef4444"></i></div>
               <div>
-                <div class="text-sm font-bold text-red-400 mb-1">Polaridad invertida del LED</div>
+                <div class="text-xs sm:text-sm font-bold text-red-400 mb-1">Polaridad invertida del LED</div>
                 <p class="text-xs opacity-70">El ánodo (+) es la patita larga. Invertirlo evita que el LED encienda.</p>
               </div>
             </div>
@@ -809,18 +866,18 @@
 
         <!-- RETOS -->
         
-        <section class="rev mb-8">
-          <div class="sec-title mb-4 opacity-60"><i data-lucide="trophy" style="width:14px;height:14px"></i> Retos</div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <section class="rev mb-6 sm:mb-8">
+          <div class="sec-title mb-3 sm:mb-4 opacity-60"><i data-lucide="trophy" style="width:14px;height:14px"></i> Retos</div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
             
             <div class="reto-int">
-              <span class="badge bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-3">⭐ Intermedio</span>
+              <span class="badge bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-2.5 sm:mb-3">⭐ Intermedio</span>
               <p class="text-xs opacity-80 leading-relaxed">Diseña un circuito donde el LED no se queme y tenga el brillo adecuado. Calcula tú mismo la resistencia necesaria para que circule exactamente 20mA: R = (V_bat − V_LED) ÷ I_LED.</p>
             </div>
             
             
             <div class="reto-adv">
-              <span class="badge bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 mb-3">⭐⭐ Avanzado</span>
+              <span class="badge bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 mb-2.5 sm:mb-3">⭐⭐ Avanzado</span>
               <p class="text-xs opacity-80 leading-relaxed">Calcula el error entre teórico y medido y explica por qué existe. %Error = |(Teórico − Real)| ÷ Teórico × 100. Menciona mínimo 3 causas (tolerancia de componentes, resistencia interna, calibración del instrumento).</p>
             </div>
             
@@ -830,12 +887,12 @@
 
         <!-- CONCLUSIÓN -->
         
-        <section class="rev mb-10">
-          <div class="sec-title text-green-400 mb-3"><i data-lucide="pen-line" style="width:14px;height:14px"></i> Conclusión</div>
-          <div class="card p-5">
+        <section class="rev mb-8 sm:mb-10">
+          <div class="sec-title text-green-400 mb-2.5 sm:mb-3"><i data-lucide="pen-line" style="width:14px;height:14px"></i> Conclusión</div>
+          <div class="card p-4 sm:p-5">
             
             <p class="text-xs font-mono text-purple-400 mb-2">Nota para el docente:</p>
-            <p class="text-sm opacity-90">Los cálculos teóricos no siempre coinciden exactamente con la realidad, pero permiten predecir el comportamiento del circuito y evitar fallas. En el seguidor de línea esto es clave para proteger el ESP32 y los sensores.</p>
+            <p class="text-xs sm:text-sm opacity-90 leading-relaxed">Los cálculos teóricos no siempre coinciden exactamente con la realidad, pero permiten predecir el comportamiento del circuito y evitar fallas. En el seguidor de línea esto es clave para proteger el ESP32 y los sensores.</p>
             
           </div>
         </section>
@@ -848,13 +905,13 @@
       <div class="practica-container page-break-after" id="section-EB_P02">
 
         <!-- HEADER -->
-        <header class="rev rev-1 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10 pb-8 border-b border-white/10">
-          <div class="flex items-center gap-5">
-            <div class="w-20 h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-2 drop-shadow-xl">
-              <img src="static/images/logo_transparent.png" class="w-full h-full object-contain filter invert opacity-90" alt="Inna'at" onerror="this.parentElement.innerHTML='<i data-lucide=\'bot\' class=\'text-green-400 w-10 h-10\'></i>'">
+        <header class="rev rev-1 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 mb-8 sm:mb-10 pb-6 sm:pb-8 border-b border-white/10">
+          <div class="flex items-start sm:items-center gap-3 sm:gap-5 w-full">
+            <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-2 drop-shadow-xl flex-shrink-0">
+              <img src="static/images/logo_transparent.png" class="w-full h-full object-contain filter invert opacity-90" alt="Inna'at" onerror="this.parentElement.innerHTML='<i data-lucide=\'bot\' class=\'text-green-400 w-8 h-8 sm:w-10 sm:h-10\'></i>'">
             </div>
-            <div>
-              <div class="flex items-center gap-2 mb-1 flex-wrap">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-1.5 sm:gap-2 mb-1.5 flex-wrap">
                 <span class="badge bg-green-500/15 text-green-400 border border-green-500/30">P-02</span>
                 <span class="badge bg-blue-500/15 text-blue-400 border border-blue-500/30">Electrónica</span>
                 <span class="badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/30">Nivel 🟢 Básico</span>
@@ -862,27 +919,27 @@
                 <span class="badge bg-purple-500/15 text-purple-400 border border-purple-500/30 font-black">DOCENTE</span>
                 
               </div>
-              <h1 class="text-3xl md:text-4xl font-black italic uppercase leading-none">El capacitor, el componente mas incomprendido</h1>
+              <h1 class="text-2xl sm:text-3xl md:text-4xl font-black italic uppercase leading-tight sm:leading-none break-words">El capacitor, el componente mas incomprendido</h1>
             </div>
           </div>
         </header>
 
         <!-- PROBLEMA DETONADOR -->
         
-        <section class="rev rev-2 mb-8">
-          <div class="relative overflow-hidden rounded-3xl p-6 border-l-8 border-green-500" style="background:linear-gradient(135deg,rgba(34,197,94,.1) 0%,rgba(34,197,94,.03) 100%)">
-            <div class="absolute top-3 right-5 text-[80px] font-black opacity-5 leading-none select-none font-mono">?</div>
+        <section class="rev rev-2 mb-6 sm:mb-8">
+          <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl p-4 sm:p-6 border-l-4 sm:border-l-8 border-green-500" style="background:linear-gradient(135deg,rgba(34,197,94,.1) 0%,rgba(34,197,94,.03) 100%)">
+            <div class="absolute top-2 right-4 text-[60px] sm:text-[80px] font-black opacity-5 leading-none select-none font-mono">?</div>
             <div class="sec-title text-green-400"><i data-lucide="zap" style="width:14px;height:14px"></i> Problema Detonador</div>
-            <p class="text-xl md:text-2xl font-bold italic leading-snug">"¿De donde saca el impuslo el robot para mantener el movimiento con la misma fuerza?"</p>
+            <p class="text-base sm:text-xl md:text-2xl font-bold italic leading-snug">"¿De donde saca el impuslo el robot para mantener el movimiento con la misma fuerza?"</p>
           </div>
         </section>
         
 
         <!-- OBJETIVO + FÓRMULA -->
-        <div class="rev rev-2 grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-          <div class="card p-5">
+        <div class="rev rev-2 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-6 sm:mb-8">
+          <div class="card p-4 sm:p-5">
             <div class="sec-title text-blue-400"><i data-lucide="target" style="width:14px;height:14px"></i> Objetivo</div>
-            <p class="text-sm leading-relaxed opacity-80">Entender la importancia del capacitor en los circuitos en la robotica, asi como conocer el funcionamiento del capacitor y comó usarlo en la electronica.</p>
+            <p class="text-xs sm:text-sm leading-relaxed opacity-80">Entender la importancia del capacitor en los circuitos en la robotica, asi como conocer el funcionamiento del capacitor y comó usarlo en la electronica.</p>
           </div>
           
         </div>
@@ -892,42 +949,42 @@
 
         <!-- APLICACIÓN EN ROBÓTICA -->
         
-        <section class="rev rev-3 mb-8">
+        <section class="rev rev-3 mb-6 sm:mb-8">
           <div class="robot-app">
             <div class="sec-title" style="color:#60a5fa"><i data-lucide="bot" style="width:14px;height:14px"></i> Aplicación en Robótica</div>
-            <p class="text-sm opacity-80 leading-relaxed">Este conocimiento permite entender por que un circuito de robotica no debe construirse sin motores</p>
+            <p class="text-xs sm:text-sm opacity-80 leading-relaxed">Este conocimiento permite entender por que un circuito de robotica no debe construirse sin motores</p>
           </div>
         </section>
         
 
         <!-- COMPONENTES -->
         
-        <section class="rev rev-4 card p-6 mb-8">
+        <section class="rev rev-4 card p-4 sm:p-6 mb-6 sm:mb-8">
           <div class="sec-title text-yellow-400"><i data-lucide="cpu" style="width:14px;height:14px"></i> Componentes Necesarios</div>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-3">
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Multimetro</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Multimetro</div>
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Leds diversos colores</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>Leds diversos colores</div>
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>2 Resistencias de 10Kohms</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>2 Resistencias de 10Kohms</div>
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>2 Resistencias 1Kohms</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>2 Resistencias 1Kohms</div>
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>1 capacitor de 100 uF</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>1 capacitor de 100 uF</div>
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>1 capacitor 10 uF y 100 nF</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>1 capacitor 10 uF y 100 nF</div>
             
-            <div class="flex items-center gap-2 text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>protoboard</div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm opacity-75"><span class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></span>protoboard</div>
             
           </div>
         </section>
         
 
         <!-- DIAGRAMA DE FLUJO -->
-        <section class="rev rev-4 card p-6 mb-8">
+        <section class="rev rev-4 card p-4 sm:p-6 mb-6 sm:mb-8">
           <div class="sec-title text-green-400"><i data-lucide="git-branch" style="width:14px;height:14px"></i> Diagrama de Flujo</div>
-          <div class="flow gap-y-3">
+          <div class="flow gap-y-2 sm:gap-y-3">
             <div class="flow-step">🟢 Inicio</div>
             <div class="flow-arrow">→</div>
             <div class="flow-step">Armar circuito</div>
@@ -971,26 +1028,26 @@
             <!-- SLIDES CAROUSEL -->
             <div class="carousel-wrap" data-carousel>
               
-              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-6 card p-6" data-active=true>
+              <div class="carousel-slide grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6 card p-4 sm:p-6" data-active=true>
                 <!-- Media -->
                 <div class="lg:col-span-3">
                   
                     
                     
-                    <div class="rounded-2xl aspect-video bg-white/5 border border-white/10 flex flex-col items-center justify-center text-white/20 text-sm font-mono p-4 text-center">
-                      <i data-lucide="image" class="w-10 h-10 mb-2"></i>P02.1.png
+                    <div class="rounded-xl sm:rounded-2xl aspect-video bg-white/5 border border-white/10 flex flex-col items-center justify-center text-white/20 text-xs sm:text-sm font-mono p-4 text-center">
+                      <i data-lucide="image" class="w-8 h-8 sm:w-10 sm:h-10 mb-2"></i>P02.1.png
                     </div>
                     
                   
                 </div>
                 <!-- Content -->
-                <div class="lg:col-span-2 space-y-4">
-                  <div class="text-green-400 font-black text-lg italic uppercase mb-1">Identifica el valor de la capacitancia del capacitor</div>
-                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-4">
-                    <div class="text-xs font-mono text-green-400 mb-3 font-bold">PASOS</div>
-                    <ol class="space-y-2 text-xs opacity-75 list-none">
+                <div class="lg:col-span-2 space-y-3 sm:space-y-4">
+                  <div class="text-green-400 font-black text-base sm:text-lg italic uppercase leading-tight mb-1">Identifica el valor de la capacitancia del capacitor</div>
+                  <div class="rounded-xl border border-green-500/20 bg-green-500/5 p-3 sm:p-4">
+                    <div class="text-[11px] sm:text-xs font-mono text-green-400 mb-2.5 sm:mb-3 font-bold">PASOS</div>
+                    <ol class="space-y-2 text-xs sm:text-xs opacity-75 list-none">
                       
-                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> 1.- Toma el capacitor y observa el color, la forma , los numeros y letras que tiene</li>
+                      <li class="flex gap-2"><span class="text-green-400 font-bold font-mono">01.</span> <span>1.- Toma el capacitor y observa el color, la forma , los numeros y letras que tiene</span></li>
                       
                     </ol>
                   </div>
@@ -1012,14 +1069,14 @@
 
         <!-- ERRORES COMUNES -->
         
-        <section class="rev rev-6 mb-8">
-          <div class="sec-title text-red-400 mb-4"><i data-lucide="alert-triangle" style="width:14px;height:14px"></i> Errores Comunes</div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <section class="rev rev-6 mb-6 sm:mb-8">
+          <div class="sec-title text-red-400 mb-3 sm:mb-4"><i data-lucide="alert-triangle" style="width:14px;height:14px"></i> Errores Comunes</div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
             
             <div class="err-card">
               <div class="err-icon"><i data-lucide="x-circle" style="width:16px;height:16px;color:#ef4444"></i></div>
               <div>
-                <div class="text-sm font-bold text-red-400 mb-1">Capacitor mal identificado</div>
+                <div class="text-xs sm:text-sm font-bold text-red-400 mb-1">Capacitor mal identificado</div>
                 <p class="text-xs opacity-70">Hay capacitores con polaridad y sin polaridad, identificar mal un capacitor de acuerdo a estas caracteristicas  terminaria dañando el capacitor. Solución: los capacitores con polaridad siempre tienen una marca en el capacitor o una patita mas pequeña que identifica la polaridad</p>
               </div>
             </div>
@@ -1052,7 +1109,16 @@
 
     /* ═══ SIDEBAR ═══ */
     function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('closed');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      const isClosed = sidebar.classList.toggle('closed');
+      if (overlay) {
+        if (!isClosed && window.innerWidth < 768) {
+          overlay.classList.remove('hidden');
+        } else {
+          overlay.classList.add('hidden');
+        }
+      }
       setTimeout(() => lucide.createIcons(), 50);
     }
     function navigateTo(id) {
