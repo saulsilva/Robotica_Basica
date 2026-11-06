@@ -149,6 +149,20 @@
     body.paper .carousel-wrap[data-carousel] .carousel-slide{display:grid !important;margin-bottom:28px}
     body.paper .thumbs,body.paper .carousel-btn{display:none !important}
 
+    /* SINGLE TOPIC VIEW (EVITAR SATURACIÓN VISUAL) */
+    .manual-section-item {
+      display: none;
+    }
+    .manual-section-item.active-topic {
+      display: block;
+      animation: fadeIn .35s ease-out;
+    }
+    @media print {
+      .manual-section-item {
+        display: block !important;
+      }
+    }
+
     @media(max-width:768px){
       .formula-box{flex-direction:column;align-items:flex-start;padding:14px 16px;gap:8px}
       .formula-box .eq{font-size:18px;word-break:break-word}
@@ -198,21 +212,21 @@
     <div class="space-y-1">
       
         
-        <a href="#section-T01" class="sidebar-link" onclick="navigateTo('section-T01')">
+        <a href="#section-T01" class="sidebar-link" onclick="navigateTo('section-T01'); return false;">
           <span class="link-badge bg-blue-500/15 text-blue-400 border border-blue-500/30">T</span>
           <span class="truncate text-xs">Conociendo la electrónica</span>
         </a>
         
       
         
-        <a href="#section-P01" class="sidebar-link" onclick="navigateTo('section-P01')">
+        <a href="#section-P01" class="sidebar-link" onclick="navigateTo('section-P01'); return false;">
           <span class="link-badge bg-green-500/15 text-green-400 border border-green-500/30">P-01</span>
           <span class="truncate text-xs">⚡ El multímetro y la Ley de Ohm</span>
         </a>
         
       
         
-        <a href="#section-EB_P02" class="sidebar-link" onclick="navigateTo('section-EB_P02')">
+        <a href="#section-EB_P02" class="sidebar-link" onclick="navigateTo('section-EB_P02'); return false;">
           <span class="link-badge bg-green-500/15 text-green-400 border border-green-500/30">P-02</span>
           <span class="truncate text-xs">El capacitor, el componente mas incomprendido</span>
         </a>
@@ -257,20 +271,831 @@
 
     
       
-      <div class="teoria-container card p-5 sm:p-8 page-break-after" id="section-T01">
-        <div class="flex items-center gap-2 mb-3 sm:mb-4 flex-wrap">
-          <span class="badge bg-blue-500/15 text-blue-400 border border-blue-500/30">TEORÍA</span>
-          <span class="badge bg-slate-800 text-slate-300 border border-slate-700">Bloque A — Electrónica Fundamental</span>
+      <div class="teoria-container page-break-after manual-section-item" id="section-T01">
+        
+        <!-- Header del Módulo Teórico -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-white/10">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="badge bg-blue-500/15 text-blue-400 border border-blue-500/30">MÓDULO TEÓRICO</span>
+              <span class="badge bg-slate-800 text-slate-300 border border-slate-700">Bloque A — Electrónica Fundamental</span>
+              <span class="badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/30">🟢 Básico</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black italic uppercase leading-tight break-words">Conociendo la electrónica</h2>
+          </div>
+          
+          <div class="flex items-center gap-2 self-start sm:self-auto font-mono text-xs text-blue-400 bg-blue-500/10 border border-blue-500/30 px-3 py-1.5 rounded-full">
+            <i data-lucide="layers" style="width:14px;height:14px"></i>
+            <span>6 Fichas Técnicas</span>
+          </div>
+          
         </div>
-        <h2 class="text-2xl sm:text-3xl font-black mb-4 sm:mb-6 leading-tight break-words">Conociendo la electrónica</h2>
-        <div class="prose prose-invert prose-green max-w-none prose-headings:font-outfit prose-a:text-green-400 text-xs sm:text-sm break-words">
-          <p>POKÉ-ELECTRÓNICA: REGISTRO DE COMPONENTES#001 - Resistencia (Resistor)Tipo: Pasivo / Defensor de CorrienteSímbolo Esquemático: Una línea en zigzag (estándar americano) o un rectángulo (estándar europeo).Información Clave: Su misión es limitar y controlar el flujo de corriente eléctrica en un circuito. Se mide en Ohmios ($\Omega$) y su valor se lee mediante franjas de colores impresas en su cuerpo. Actúa como un "freno" para proteger a otros componentes más delicados como los LEDs.Usos Principales:Dividir voltajes.Proteger componentes sensibles limitando la corriente.Configurar tiempos junto con capacitores.Conexiones: No tiene polaridad, por lo que no importa de qué lado la conectes. Se coloca en serie con el componente que deseas proteger o en paralelo para dividir señales.#002 - Diodo LED (Light Emitting Diode)Tipo: Activo / Emisor de LuzSímbolo Esquemático: Un triángulo apuntando a una línea vertical, con dos flechas pequeñas que apuntan hacia afuera (indicando que emite luz).Información Clave: Es un semiconductor que transforma la energía eléctrica en luz de manera muy eficiente. A diferencia de las bombillas tradicionales, el LED es muy sensible a la polaridad: si lo conectas al revés, simplemente no enciende (¡pero no explota si respetas el voltaje!). Su pata larga es el Ánodo (+) y la corta el Cátodo (-).Usos Principales:Indicadores de encendido y estado.Pantallas e iluminación.Señalización en robots y proyectos visuales.Conexiones: Tiene polaridad. El Ánodo (+) se conecta al positivo (o a través de una resistencia hacia el pin de voltaje) y el Cátodo (-) se conecta a tierra (GND). ¡Nunca lo conectes sin una resistencia limitadora o se fundirá instantáneamente!#003 - Diodo Rectificador (Ej. 1N4007)Tipo: Semiconductor / Válvula UnidireccionalSímbolo Esquemático: Un triángulo apuntando a una barra vertical.Información Clave: Funciona como una válvula antirretorno para la electricidad. Permite que la corriente fluya en una sola dirección (del ánodo al cátodo) y la bloquea si intenta regresar en sentido contrario. Cuenta con una franja gris en su cuerpo que indica el lado del cátodo.Usos Principales:Proteger circuitos contra inversión accidental de polaridad (si conectas la pila al revés).Convertir corriente alterna (AC) en corriente directa (DC).Descargar picos de voltaje en motores (diodo de rueda libre / flyback).Conexiones: Tiene polaridad estricta. La franja gris (Cátodo) va hacia el lado negativo o hacia donde no quieres que regrese la corriente, y el lado opuesto (Ánodo) va hacia la fuente positiva.#004 - Capacitor / Condensador (Electrolítico o Cerámico)Tipo: Pasivo / Almacenador de EnergíaSímbolo Esquemático: Dos líneas paralelas (una recta y otra curvada para los polarizados, o dos rectas para los no polarizados).Información Clave: Funciona como una mini-batería de carga y descarga ultrarrápida. Almacena energía en un campo eléctrico y la libera cuando el circuito lo necesita. Los capacitores electrolíticos tienen polaridad y valor alto (en microfaradios $\mu F$), mientras que los cerámicos son pequeños y sin polaridad.Usos Principales:Filtrar ruido eléctrico y estabilizar voltajes en fuentes de alimentación.Suavizar parpadeos y picos de corriente en motores y sensores.Temporización y acoplamiento de señales.Conexiones:Electrolíticos (Polarizados): Tienen una franja con signos negativos (-) que señala la pata corta (Cátodo). La pata larga es el positivo. Conéctalos respetando esto o podrían dañarse.Cerámicos (No polarizados): Se pueden conectar en cualquier dirección, usualmente en paralelo entre VCC y GND para limpiar interferencias.#005 - Batería (Fuente de Alimentación)Tipo: Activa / Proveedor de EnergíaSímbolo Esquemático: Líneas paralelas alternadas de tamaño largo (positivo) y corto (negativo).Información Clave: Es el "corazón" energético del circuito. Almacena energía química y la convierte en energía eléctrica de corriente directa (DC). Posee un voltaje nominal (ej. 3.7V, 5V, 9V, 12V) que indica la "fuerza" con la que impulsa a los electrones a través del circuito.Usos Principales:Proveer energía portátil a dispositivos, tarjetas de desarrollo y robots móviles.Conexiones: Tiene polaridad fija. El terminal Positivo (+) (cable rojo o marca +) se conecta a la entrada de alimentación del circuito, y el Negativo (-) (cable negro o marca -) se conecta al bus de tierra (GND).#006 - Multímetro (El Inspector / Herramienta de Diagnóstico)Tipo: Instrumento de Medición MultifunciónSímbolo Esquemático: Un círculo con una letra "V", "A" o "$\Omega$" en su interior, con dos sondas (cables rojo y negro).Información Clave: El arma secreta de cualquier técnico o inventor. Permite medir las magnitudes invisibles de la electricidad: Voltaje (Volts), Corriente (Amperes) y Resistencia (Ohmios), además de probar continuidad (si un cable está roto o conectado).Usos Principales:Diagnosticar fallas y cortocircuitos en circuitos armados.Medir cuánta carga le queda a una batería.Verificar valores de resistencias antes de colocarlas.Conexiones:El cable negro siempre va en el puerto común (COM).El cable rojo se conecta en el puerto de Voltios/Ohmios ($\text{V}\Omega\text{mA}$) para medir voltaje y resistencia, o en el puerto de Amperes (10A) para medir corriente (cuidando de poner el selector en la función correcta antes de tocar el circuito).</p>
+
+        
+        <!-- ═══ CARRUSEL DE FICHAS TÉCNICAS (TRADING CARDS) ═══ -->
+        <section class="rev rev-2 mb-8" data-theory-carousel>
+          <!-- Nav row y selector -->
+          <div class="flex items-center justify-between mb-4 no-print gap-3">
+            <div class="flex items-center gap-2">
+              <button class="carousel-btn" data-theory-prev disabled title="Ficha anterior">
+                <i data-lucide="chevron-left" style="width:16px;height:16px"></i>
+              </button>
+              <button class="carousel-btn" data-theory-next title="Siguiente ficha">
+                <i data-lucide="chevron-right" style="width:16px;height:16px"></i>
+              </button>
+            </div>
+            <div class="font-mono text-xs font-bold px-3.5 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 truncate" data-theory-indicator>
+              FICHA 1 / 6
+            </div>
+          </div>
+
+          <!-- Barra de progreso -->
+          <div class="progress-bar-track mb-5">
+            <div class="progress-bar-fill" style="background:#3b82f6; width:16.666666666666664%" data-theory-fill></div>
+          </div>
+
+          <!-- Contenedor de Fichas -->
+          <div class="theory-cards-wrap relative">
+            
+            <div class="theory-card card overflow-hidden border-blue-500/20 bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-blue-950/20 p-5 sm:p-7 block" data-theory-slide>
+              
+              <!-- Cabecera de la Ficha -->
+              <div class="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-white/10">
+                <div class="flex items-center gap-3.5">
+                  <span class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-emerald-500/10 border border-blue-500/30 text-blue-400 font-mono font-black text-sm flex items-center justify-center flex-shrink-0 shadow-lg">
+                    #001
+                  </span>
+                  <div>
+                    <h3 class="text-xl sm:text-2xl font-black italic uppercase leading-tight text-white tracking-wide">Resistencia (Resistor)</h3>
+                    <p class="text-xs sm:text-sm font-mono text-blue-400 mt-0.5">Pasivo / Defensor de Corriente</p>
+                  </div>
+                </div>
+                <span class="badge bg-blue-500/10 text-blue-300 border border-blue-500/20 font-mono text-[10px] hidden sm:inline-flex">
+                  FICHA TÉCNICA
+                </span>
+              </div>
+
+              <!-- Cuerpo de la Ficha: Secciones Editables (Texto o Imagen) -->
+              
+                <div class="space-y-6">
+                  <!-- Imagen destacada si existe -->
+                  
+                  <div class="relative rounded-2xl overflow-hidden border border-white/10 bg-black/40 max-h-72 flex items-center justify-center group cursor-pointer" onclick="openLightbox('/static/uploads/silla.jpg')">
+                    <img src="static/uploads/silla.jpg" alt="Resistencia (Resistor)" class="w-full max-h-72 object-contain p-2 group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute bottom-2 right-2 px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur text-[10px] text-slate-300 font-mono flex items-center gap-1 opacity-80 group-hover:opacity-100">
+                      <i data-lucide="zoom-in" style="width:12px;height:12px"></i> Zoom
+                    </div>
+                  </div>
+                  
+
+                  <!-- Grilla de Secciones Dinámicas -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 items-stretch">
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-blue-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="lightbulb" style="width:13px;height:13px"></i>
+                          
+                          Misión / ¿Qué hace?
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Su misión es limitar y controlar el flujo de corriente en un circuito. Se mide en Ohmios (Ω) y su valor se lee mediante franjas de colores. Actúa como un "freno" para proteger componentes delicados como los LEDs.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="md:col-span-2 rounded-2xl overflow-hidden border border-blue-500/20 bg-black/40 p-3 sm:p-4 space-y-2">
+                        <div class="text-[11px] font-mono font-bold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
+                          <i data-lucide="image" style="width:13px;height:13px"></i> Símbolo Esquemático
+                        </div>
+                        
+                        <div class="relative rounded-xl overflow-hidden group cursor-pointer max-h-80 flex items-center justify-center bg-black/30 border border-white/5" onclick="openLightbox('/static/uploads/charizar2.jpeg')">
+                          <img src="static/uploads/charizar2.jpeg" alt="Símbolo Esquemático" class="w-full max-h-80 object-contain group-hover:scale-105 transition-transform duration-300">
+                          <div class="absolute bottom-2 right-2 px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur text-[10px] text-slate-300 font-mono flex items-center gap-1 opacity-80 group-hover:opacity-100">
+                            <i data-lucide="zoom-in" style="width:12px;height:12px"></i> Ampliar
+                          </div>
+                        </div>
+                        
+                      </div>
+                      
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="file-text" style="width:13px;height:13px"></i>
+                          
+                          Aplicaciones & Usos
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">• Dividir voltajes en sensores.
+• Proteger componentes sensibles limitando corriente.
+• Configurar tiempos junto con capacitores.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-yellow-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="plug" style="width:13px;height:13px"></i>
+                          
+                          Conexión & Polaridad
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">No tiene polaridad (bidireccional). Se coloca en serie con el componente que deseas proteger o en paralelo para dividir señales.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-red-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="alert-triangle" style="width:13px;height:13px"></i>
+                          
+                          Regla de Oro / Alerta
+                        </div>
+                        <div class="text-xs sm:text-sm text-red-200 leading-relaxed whitespace-pre-line">¡Sin una resistencia, un LED conectado a una pila de 9V se quemará en milisegundos!</div>
+                      </div>
+                      
+                    
+                  </div>
+                </div>
+
+              
+
+            </div>
+            
+            <div class="theory-card card overflow-hidden border-blue-500/20 bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-blue-950/20 p-5 sm:p-7 hidden" data-theory-slide>
+              
+              <!-- Cabecera de la Ficha -->
+              <div class="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-white/10">
+                <div class="flex items-center gap-3.5">
+                  <span class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-emerald-500/10 border border-blue-500/30 text-blue-400 font-mono font-black text-sm flex items-center justify-center flex-shrink-0 shadow-lg">
+                    #002
+                  </span>
+                  <div>
+                    <h3 class="text-xl sm:text-2xl font-black italic uppercase leading-tight text-white tracking-wide">Diodo LED</h3>
+                    <p class="text-xs sm:text-sm font-mono text-blue-400 mt-0.5">Activo / Emisor de Luz</p>
+                  </div>
+                </div>
+                <span class="badge bg-blue-500/10 text-blue-300 border border-blue-500/20 font-mono text-[10px] hidden sm:inline-flex">
+                  FICHA TÉCNICA
+                </span>
+              </div>
+
+              <!-- Cuerpo de la Ficha: Secciones Editables (Texto o Imagen) -->
+              
+                <div class="space-y-6">
+                  <!-- Imagen destacada si existe -->
+                  
+
+                  <!-- Grilla de Secciones Dinámicas -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 items-stretch">
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-blue-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="lightbulb" style="width:13px;height:13px"></i>
+                          
+                          Misión / ¿Qué hace?
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Semiconductor que transforma energía eléctrica en luz de forma ultra-eficiente. Es muy sensible a la polaridad: si lo conectas al revés no encenderá.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="file-text" style="width:13px;height:13px"></i>
+                          
+                          Símbolo Esquemático
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Triángulo apuntando a una línea vertical con dos flechas salientes (indicando emisión de luz).</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="file-text" style="width:13px;height:13px"></i>
+                          
+                          Aplicaciones & Usos
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">• Indicadores de encendido y estado en robots.
+• Pantallas e iluminación.
+• Señalización visual de estados lógicos.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-yellow-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="plug" style="width:13px;height:13px"></i>
+                          
+                          Conexión & Polaridad
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Tiene polaridad estricta. Ánodo (+) pata larga al positivo; Cátodo (-) pata corta a tierra (GND).</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-red-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="alert-triangle" style="width:13px;height:13px"></i>
+                          
+                          Regla de Oro / Alerta
+                        </div>
+                        <div class="text-xs sm:text-sm text-red-200 leading-relaxed whitespace-pre-line">¡Nunca lo conectes directo a la alimentación sin una resistencia limitadora o se fundirá!</div>
+                      </div>
+                      
+                    
+                  </div>
+                </div>
+
+              
+
+            </div>
+            
+            <div class="theory-card card overflow-hidden border-blue-500/20 bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-blue-950/20 p-5 sm:p-7 hidden" data-theory-slide>
+              
+              <!-- Cabecera de la Ficha -->
+              <div class="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-white/10">
+                <div class="flex items-center gap-3.5">
+                  <span class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-emerald-500/10 border border-blue-500/30 text-blue-400 font-mono font-black text-sm flex items-center justify-center flex-shrink-0 shadow-lg">
+                    #003
+                  </span>
+                  <div>
+                    <h3 class="text-xl sm:text-2xl font-black italic uppercase leading-tight text-white tracking-wide">Diodo Rectificador (1N4007)</h3>
+                    <p class="text-xs sm:text-sm font-mono text-blue-400 mt-0.5">Semiconductor / Válvula Unidireccional</p>
+                  </div>
+                </div>
+                <span class="badge bg-blue-500/10 text-blue-300 border border-blue-500/20 font-mono text-[10px] hidden sm:inline-flex">
+                  FICHA TÉCNICA
+                </span>
+              </div>
+
+              <!-- Cuerpo de la Ficha: Secciones Editables (Texto o Imagen) -->
+              
+                <div class="space-y-6">
+                  <!-- Imagen destacada si existe -->
+                  
+
+                  <!-- Grilla de Secciones Dinámicas -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 items-stretch">
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-blue-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="lightbulb" style="width:13px;height:13px"></i>
+                          
+                          Misión / ¿Qué hace?
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Funciona como una válvula antirretorno: permite que la corriente fluya en una sola dirección y la bloquea si intenta regresar en sentido contrario.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="file-text" style="width:13px;height:13px"></i>
+                          
+                          Símbolo Esquemático
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Triángulo apuntando a una barra vertical.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="file-text" style="width:13px;height:13px"></i>
+                          
+                          Aplicaciones & Usos
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">• Protección contra polaridad invertida accidental en baterías.
+• Conversión de Corriente Alterna (AC) a Directa (DC).
+• Diodo de rueda libre (Flyback) para proteger motores.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-yellow-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="plug" style="width:13px;height:13px"></i>
+                          
+                          Conexión & Polaridad
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Polaridad estricta. La franja gris en su cuerpo indica el Cátodo (-). El lado opuesto es el Ánodo (+).</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-red-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="alert-triangle" style="width:13px;height:13px"></i>
+                          
+                          Regla de Oro / Alerta
+                        </div>
+                        <div class="text-xs sm:text-sm text-red-200 leading-relaxed whitespace-pre-line">Colocarlo al revés impedirá que todo el circuito encienda o reciba energía.</div>
+                      </div>
+                      
+                    
+                  </div>
+                </div>
+
+              
+
+            </div>
+            
+            <div class="theory-card card overflow-hidden border-blue-500/20 bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-blue-950/20 p-5 sm:p-7 hidden" data-theory-slide>
+              
+              <!-- Cabecera de la Ficha -->
+              <div class="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-white/10">
+                <div class="flex items-center gap-3.5">
+                  <span class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-emerald-500/10 border border-blue-500/30 text-blue-400 font-mono font-black text-sm flex items-center justify-center flex-shrink-0 shadow-lg">
+                    #004
+                  </span>
+                  <div>
+                    <h3 class="text-xl sm:text-2xl font-black italic uppercase leading-tight text-white tracking-wide">Capacitor / Condensador</h3>
+                    <p class="text-xs sm:text-sm font-mono text-blue-400 mt-0.5">Pasivo / Almacenador de Energía</p>
+                  </div>
+                </div>
+                <span class="badge bg-blue-500/10 text-blue-300 border border-blue-500/20 font-mono text-[10px] hidden sm:inline-flex">
+                  FICHA TÉCNICA
+                </span>
+              </div>
+
+              <!-- Cuerpo de la Ficha: Secciones Editables (Texto o Imagen) -->
+              
+                <div class="space-y-6">
+                  <!-- Imagen destacada si existe -->
+                  
+
+                  <!-- Grilla de Secciones Dinámicas -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 items-stretch">
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-blue-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="lightbulb" style="width:13px;height:13px"></i>
+                          
+                          Misión / ¿Qué hace?
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Funciona como una mini-batería de carga y descarga ultrarrápida. Almacena energía en un campo eléctrico y la libera cuando el circuito tiene caídas de voltaje.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="file-text" style="width:13px;height:13px"></i>
+                          
+                          Símbolo Esquemático
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Dos líneas paralelas (una curva para electrolíticos polarizados).</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="file-text" style="width:13px;height:13px"></i>
+                          
+                          Aplicaciones & Usos
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">• Filtrar ruido y estabilizar voltajes en fuentes de alimentación.
+• Suavizar picos de corriente en motores y servos.
+• Circuitos temporizadores con osciladores.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-yellow-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="plug" style="width:13px;height:13px"></i>
+                          
+                          Conexión & Polaridad
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Electrolíticos tienen franja con signo (-) indicando la pata corta (Cátodo). Cerámicos no tienen polaridad.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-red-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="alert-triangle" style="width:13px;height:13px"></i>
+                          
+                          Regla de Oro / Alerta
+                        </div>
+                        <div class="text-xs sm:text-sm text-red-200 leading-relaxed whitespace-pre-line">Conectar un capacitor electrolítico con polaridad invertida puede sobrecalentarlo e inflarlo.</div>
+                      </div>
+                      
+                    
+                  </div>
+                </div>
+
+              
+
+            </div>
+            
+            <div class="theory-card card overflow-hidden border-blue-500/20 bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-blue-950/20 p-5 sm:p-7 hidden" data-theory-slide>
+              
+              <!-- Cabecera de la Ficha -->
+              <div class="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-white/10">
+                <div class="flex items-center gap-3.5">
+                  <span class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-emerald-500/10 border border-blue-500/30 text-blue-400 font-mono font-black text-sm flex items-center justify-center flex-shrink-0 shadow-lg">
+                    #005
+                  </span>
+                  <div>
+                    <h3 class="text-xl sm:text-2xl font-black italic uppercase leading-tight text-white tracking-wide">Batería / Fuente DC</h3>
+                    <p class="text-xs sm:text-sm font-mono text-blue-400 mt-0.5">Activa / Proveedor de Energía</p>
+                  </div>
+                </div>
+                <span class="badge bg-blue-500/10 text-blue-300 border border-blue-500/20 font-mono text-[10px] hidden sm:inline-flex">
+                  FICHA TÉCNICA
+                </span>
+              </div>
+
+              <!-- Cuerpo de la Ficha: Secciones Editables (Texto o Imagen) -->
+              
+                <div class="space-y-6">
+                  <!-- Imagen destacada si existe -->
+                  
+
+                  <!-- Grilla de Secciones Dinámicas -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 items-stretch">
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-blue-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="lightbulb" style="width:13px;height:13px"></i>
+                          
+                          Misión / ¿Qué hace?
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">El corazón energético del circuito. Convierte energía química en energía eléctrica de Corriente Directa (DC) con un voltaje nominal (3.7V, 5V, 9V, 12V).</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="file-text" style="width:13px;height:13px"></i>
+                          
+                          Símbolo Esquemático
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Líneas paralelas alternadas (larga = positivo, corta = negativo).</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="file-text" style="width:13px;height:13px"></i>
+                          
+                          Aplicaciones & Usos
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">• Energía portátil para robots móviles, microcontroladores ESP32 y sensores.
+• Alimentación autónoma en proyectos móviles.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-yellow-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="plug" style="width:13px;height:13px"></i>
+                          
+                          Conexión & Polaridad
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Terminal (+) cable rojo al VCC; terminal (-) cable negro al bus de tierra común (GND).</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-red-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="alert-triangle" style="width:13px;height:13px"></i>
+                          
+                          Regla de Oro / Alerta
+                        </div>
+                        <div class="text-xs sm:text-sm text-red-200 leading-relaxed whitespace-pre-line">Nunca juntes el polo positivo y el negativo directamente (cortocircuito peligroso).</div>
+                      </div>
+                      
+                    
+                  </div>
+                </div>
+
+              
+
+            </div>
+            
+            <div class="theory-card card overflow-hidden border-blue-500/20 bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-blue-950/20 p-5 sm:p-7 hidden" data-theory-slide>
+              
+              <!-- Cabecera de la Ficha -->
+              <div class="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-white/10">
+                <div class="flex items-center gap-3.5">
+                  <span class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-emerald-500/10 border border-blue-500/30 text-blue-400 font-mono font-black text-sm flex items-center justify-center flex-shrink-0 shadow-lg">
+                    #006
+                  </span>
+                  <div>
+                    <h3 class="text-xl sm:text-2xl font-black italic uppercase leading-tight text-white tracking-wide">Multímetro Digital</h3>
+                    <p class="text-xs sm:text-sm font-mono text-blue-400 mt-0.5">Instrumento de Diagnóstico</p>
+                  </div>
+                </div>
+                <span class="badge bg-blue-500/10 text-blue-300 border border-blue-500/20 font-mono text-[10px] hidden sm:inline-flex">
+                  FICHA TÉCNICA
+                </span>
+              </div>
+
+              <!-- Cuerpo de la Ficha: Secciones Editables (Texto o Imagen) -->
+              
+                <div class="space-y-6">
+                  <!-- Imagen destacada si existe -->
+                  
+
+                  <!-- Grilla de Secciones Dinámicas -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 items-stretch">
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-blue-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="lightbulb" style="width:13px;height:13px"></i>
+                          
+                          Misión / ¿Qué hace?
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">La herramienta indispensable del inventor. Permite medir magnitudes invisibles: Voltaje (V), Corriente (A), Resistencia (Ω) y continuidad auditiva.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="file-text" style="width:13px;height:13px"></i>
+                          
+                          Símbolo Esquemático
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Círculo con letra V, A o Ω y dos puntas de prueba (roja y negra).</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="file-text" style="width:13px;height:13px"></i>
+                          
+                          Aplicaciones & Usos
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">• Diagnosticar fallas y comprobar si un cable está roto con el buzzer.
+• Comprobar carga restante en baterías.
+• Medir resistencias y voltajes reales en protoboard.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-yellow-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="plug" style="width:13px;height:13px"></i>
+                          
+                          Conexión & Polaridad
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">Sonda negra siempre en COM. Sonda roja en V/Ω/mA para voltaje y resistencia, o puerto 10A para corriente alta.</div>
+                      </div>
+                      
+                    
+                      
+                      
+                      
+                      
+                      
+                      <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex flex-col justify-start">
+                        <div class="text-[10px] font-mono font-bold text-red-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                          
+                            <i data-lucide="alert-triangle" style="width:13px;height:13px"></i>
+                          
+                          Regla de Oro / Alerta
+                        </div>
+                        <div class="text-xs sm:text-sm text-red-200 leading-relaxed whitespace-pre-line">¡No midas corriente conectando en paralelo a la batería o volarás el fusible de protección!</div>
+                      </div>
+                      
+                    
+                  </div>
+                </div>
+
+              
+
+            </div>
+            
+          </div>
+
+          <!-- Selector de Fichas (Miniaturas / Píldoras Rápidas) -->
+          <div class="no-print mt-5 flex items-center gap-2 overflow-x-auto pb-2 -mx-1 px-1">
+            
+            <button type="button" class="theory-thumb px-3 py-2 rounded-xl border text-xs font-mono font-bold transition flex items-center gap-2 flex-shrink-0 bg-blue-500/20 border-blue-500 text-blue-300 shadow-md shadow-blue-500/20" data-theory-thumb="0">
+              <span class="w-2 h-2 rounded-full bg-blue-400" data-thumb-dot></span>
+              <span class="opacity-60 text-[10px]">#001</span>
+              <span class="truncate max-w-[140px]">Resistencia (Resistor)</span>
+            </button>
+            
+            <button type="button" class="theory-thumb px-3 py-2 rounded-xl border text-xs font-mono font-bold transition flex items-center gap-2 flex-shrink-0 bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10" data-theory-thumb="1">
+              <span class="w-2 h-2 rounded-full bg-slate-600" data-thumb-dot></span>
+              <span class="opacity-60 text-[10px]">#002</span>
+              <span class="truncate max-w-[140px]">Diodo LED</span>
+            </button>
+            
+            <button type="button" class="theory-thumb px-3 py-2 rounded-xl border text-xs font-mono font-bold transition flex items-center gap-2 flex-shrink-0 bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10" data-theory-thumb="2">
+              <span class="w-2 h-2 rounded-full bg-slate-600" data-thumb-dot></span>
+              <span class="opacity-60 text-[10px]">#003</span>
+              <span class="truncate max-w-[140px]">Diodo Rectificador (1N4007)</span>
+            </button>
+            
+            <button type="button" class="theory-thumb px-3 py-2 rounded-xl border text-xs font-mono font-bold transition flex items-center gap-2 flex-shrink-0 bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10" data-theory-thumb="3">
+              <span class="w-2 h-2 rounded-full bg-slate-600" data-thumb-dot></span>
+              <span class="opacity-60 text-[10px]">#004</span>
+              <span class="truncate max-w-[140px]">Capacitor / Condensador</span>
+            </button>
+            
+            <button type="button" class="theory-thumb px-3 py-2 rounded-xl border text-xs font-mono font-bold transition flex items-center gap-2 flex-shrink-0 bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10" data-theory-thumb="4">
+              <span class="w-2 h-2 rounded-full bg-slate-600" data-thumb-dot></span>
+              <span class="opacity-60 text-[10px]">#005</span>
+              <span class="truncate max-w-[140px]">Batería / Fuente DC</span>
+            </button>
+            
+            <button type="button" class="theory-thumb px-3 py-2 rounded-xl border text-xs font-mono font-bold transition flex items-center gap-2 flex-shrink-0 bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10" data-theory-thumb="5">
+              <span class="w-2 h-2 rounded-full bg-slate-600" data-thumb-dot></span>
+              <span class="opacity-60 text-[10px]">#006</span>
+              <span class="truncate max-w-[140px]">Multímetro Digital</span>
+            </button>
+            
+          </div>
+        </section>
+        
+
+        <!-- Markdown de respaldo si existe contenido adicional -->
+        
+
+        <!-- NAVEGACIÓN ENTRE TEMAS (ANTERIOR / SIGUIENTE) -->
+        <div class="topic-navigation mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 no-print">
+          
+            <div class="hidden sm:block"></div>
+          
+
+          <div class="text-[11px] font-mono text-slate-400 font-bold uppercase tracking-wider bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+            Tema 1 de 3
+          </div>
+
+          
+            
+            <button type="button" onclick="navigateTo('section-P01')" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 text-xs font-bold text-green-400 hover:text-green-300 transition flex items-center justify-between sm:justify-start gap-2 shadow-lg shadow-green-500/10 group">
+              <span class="truncate max-w-[200px]">Siguiente: ⚡ El multímetro y la Ley de Ohm</span>
+              <i data-lucide="arrow-right" style="width:14px;height:14px" class="group-hover:translate-x-0.5 transition-transform"></i>
+            </button>
+          
         </div>
+
       </div>
       
     
       
-      <div class="practica-container page-break-after" id="section-P01">
+      <div class="practica-container page-break-after manual-section-item" id="section-P01">
 
         <!-- HEADER -->
         <header class="rev rev-1 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 mb-8 sm:mb-10 pb-6 sm:pb-8 border-b border-white/10">
@@ -897,12 +1722,34 @@
           </div>
         </section>
         
+        <!-- NAVEGACIÓN ENTRE TEMAS (ANTERIOR / SIGUIENTE) -->
+        <div class="topic-navigation mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 no-print">
+          
+            
+            <button type="button" onclick="navigateTo('section-T01')" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-slate-300 hover:text-white transition flex items-center gap-2 group">
+              <i data-lucide="arrow-left" style="width:14px;height:14px" class="group-hover:-translate-x-0.5 transition-transform"></i>
+              <span class="truncate max-w-[200px]">Anterior: Conociendo la electrónica</span>
+            </button>
+          
+
+          <div class="text-[11px] font-mono text-slate-400 font-bold uppercase tracking-wider bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+            Tema 2 de 3
+          </div>
+
+          
+            
+            <button type="button" onclick="navigateTo('section-EB_P02')" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 text-xs font-bold text-green-400 hover:text-green-300 transition flex items-center justify-between sm:justify-start gap-2 shadow-lg shadow-green-500/10 group">
+              <span class="truncate max-w-[200px]">Siguiente: El capacitor, el componente mas incomprendido</span>
+              <i data-lucide="arrow-right" style="width:14px;height:14px" class="group-hover:translate-x-0.5 transition-transform"></i>
+            </button>
+          
+        </div>
       </div>
 
       
     
       
-      <div class="practica-container page-break-after" id="section-EB_P02">
+      <div class="practica-container page-break-after manual-section-item" id="section-EB_P02">
 
         <!-- HEADER -->
         <header class="rev rev-1 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 mb-8 sm:mb-10 pb-6 sm:pb-8 border-b border-white/10">
@@ -1090,6 +1937,27 @@
 
         <!-- CONCLUSIÓN -->
         
+        <!-- NAVEGACIÓN ENTRE TEMAS (ANTERIOR / SIGUIENTE) -->
+        <div class="topic-navigation mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 no-print">
+          
+            
+            <button type="button" onclick="navigateTo('section-P01')" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-slate-300 hover:text-white transition flex items-center gap-2 group">
+              <i data-lucide="arrow-left" style="width:14px;height:14px" class="group-hover:-translate-x-0.5 transition-transform"></i>
+              <span class="truncate max-w-[200px]">Anterior: ⚡ El multímetro y la Ley de Ohm</span>
+            </button>
+          
+
+          <div class="text-[11px] font-mono text-slate-400 font-bold uppercase tracking-wider bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+            Tema 3 de 3
+          </div>
+
+          
+            <a href="index.html" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-xs font-bold text-blue-400 hover:text-blue-300 transition flex items-center gap-2">
+              <span>Volver a Portada</span>
+              <i data-lucide="check-circle-2" style="width:14px;height:14px"></i>
+            </a>
+          
+        </div>
       </div>
 
       
@@ -1121,29 +1989,72 @@
       }
       setTimeout(() => lucide.createIcons(), 50);
     }
-    function navigateTo(id) {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // Update active link
-        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-        event.currentTarget.classList.add('active');
-      }
-      // On mobile close sidebar
-      if (window.innerWidth < 768) toggleSidebar();
-    }
-    // Auto-highlight sidebar on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          document.querySelectorAll('.sidebar-link').forEach(l => {
-            l.classList.toggle('active', l.getAttribute('href') === '#' + id);
-          });
-        }
+    /* ═══ NAVEGACIÓN DE TEMA ÚNICO (EVITA SATURACIÓN VISUAL) ═══ */
+    let allTopicSections = [];
+
+    function showTopic(sectionId, updateHash) {
+      if (updateHash === undefined) updateHash = true;
+      if (!sectionId) return;
+      const targetId = sectionId.startsWith('section-') ? sectionId : 'section-' + sectionId;
+      const target = document.getElementById(targetId);
+      if (!target) return;
+
+      // Ocultar todos los temas y mostrar exclusivamente el seleccionado
+      allTopicSections.forEach(function(s) { s.classList.remove('active-topic'); });
+      target.classList.add('active-topic');
+
+      // Actualizar enlace activo en el sidebar
+      document.querySelectorAll('.sidebar-link').forEach(function(link) {
+        const href = link.getAttribute('href');
+        const isActive = (href === '#' + targetId || href === targetId);
+        link.classList.toggle('active', isActive);
       });
-    }, { threshold: 0.2 });
-    document.querySelectorAll('[id^="section-"]').forEach(s => observer.observe(s));
+
+      // Scroll arriba suavemente
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Actualizar hash en la URL sin provocar scroll del navegador
+      if (updateHash && history.replaceState) {
+        history.replaceState(null, null, '#' + targetId);
+      }
+
+      // Si está en pantalla móvil, cerrar el sidebar
+      if (window.innerWidth < 768) {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        if (sidebar && !sidebar.classList.contains('closed')) sidebar.classList.add('closed');
+        if (overlay) overlay.classList.add('hidden');
+      }
+
+      setTimeout(function() { lucide.createIcons(); }, 50);
+    }
+
+    function navigateTo(id) {
+      showTopic(id, true);
+    }
+
+    // Inicializar al cargar según el hash de la URL o el primer elemento
+    document.addEventListener('DOMContentLoaded', function() {
+      allTopicSections = Array.from(document.querySelectorAll('.manual-section-item'));
+
+      const hash = window.location.hash ? window.location.hash.substring(1) : '';
+      if (hash && document.getElementById(hash)) {
+        showTopic(hash, false);
+      } else if (allTopicSections.length > 0) {
+        showTopic(allTopicSections[0].id, false);
+      }
+    });
+
+    // Soporte para botones Atrás / Adelante del navegador
+    window.addEventListener('popstate', function() {
+      if (!allTopicSections.length) allTopicSections = Array.from(document.querySelectorAll('.manual-section-item'));
+      const hash = window.location.hash ? window.location.hash.substring(1) : '';
+      if (hash && document.getElementById(hash)) {
+        showTopic(hash, false);
+      } else if (allTopicSections.length > 0) {
+        showTopic(allTopicSections[0].id, false);
+      }
+    });
 
     // Mobile: start with sidebar closed
     if (window.innerWidth < 768) document.getElementById('sidebar').classList.add('closed');
@@ -1187,6 +2098,62 @@
       thumbs.forEach((t, i) => t.addEventListener('click', () => show(i)));
 
       show(0);
+    });
+
+    /* ═══ CARRUSEL DE FICHAS TÉCNICAS (TRADING CARDS) ═══ */
+    document.querySelectorAll('[data-theory-carousel]').forEach(section => {
+      const slides = section.querySelectorAll('[data-theory-slide]');
+      const thumbs = section.querySelectorAll('[data-theory-thumb]');
+      const indicator = section.querySelector('[data-theory-indicator]');
+      const fill = section.querySelector('[data-theory-fill]');
+      const btnPrev = section.querySelector('[data-theory-prev]');
+      const btnNext = section.querySelector('[data-theory-next]');
+      const total = slides.length;
+      if (total === 0) return;
+
+      let current = 0;
+
+      function showTheory(n) {
+        n = Math.max(0, Math.min(n, total - 1));
+        
+        // Hide all slides
+        slides.forEach((s, idx) => {
+          if (idx === n) {
+            s.classList.remove('hidden');
+            s.classList.add('block');
+          } else {
+            s.classList.remove('block');
+            s.classList.add('hidden');
+          }
+        });
+
+        // Update thumbs styling
+        thumbs.forEach((t, idx) => {
+          const dot = t.querySelector('[data-thumb-dot]');
+          if (idx === n) {
+            t.className = 'theory-thumb px-3 py-2 rounded-xl border text-xs font-mono font-bold transition flex items-center gap-2 flex-shrink-0 bg-blue-500/20 border-blue-500 text-blue-300 shadow-md shadow-blue-500/20';
+            if (dot) dot.className = 'w-2 h-2 rounded-full bg-blue-400';
+            t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          } else {
+            t.className = 'theory-thumb px-3 py-2 rounded-xl border text-xs font-mono font-bold transition flex items-center gap-2 flex-shrink-0 bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10';
+            if (dot) dot.className = 'w-2 h-2 rounded-full bg-slate-600';
+          }
+        });
+
+        if (indicator) indicator.textContent = `FICHA ${n + 1} / ${total}`;
+        if (fill) fill.style.width = `${((n + 1) / total) * 100}%`;
+        if (btnPrev) btnPrev.disabled = n === 0;
+        if (btnNext) btnNext.disabled = n === total - 1;
+
+        current = n;
+        lucide.createIcons();
+      }
+
+      if (btnPrev) btnPrev.addEventListener('click', () => showTheory(current - 1));
+      if (btnNext) btnNext.addEventListener('click', () => showTheory(current + 1));
+      thumbs.forEach((t, i) => t.addEventListener('click', () => showTheory(i)));
+
+      showTheory(0);
     });
 
     /* ═══ LIGHTBOX ═══ */
